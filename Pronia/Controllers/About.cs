@@ -2,7 +2,7 @@
 
 namespace Pronia.Controllers
 {
-    public class AboutController : Controller
+    public class About : Controller
     {
         public IActionResult Index()
         {
