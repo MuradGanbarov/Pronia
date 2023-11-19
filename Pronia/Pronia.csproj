@@ -19,6 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Controllers\ProductController.cs" />
+    <Content Include="Controllers\HomeController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="wwwroot\assets\fonts\fontawesome-webfont.svg" />
     <None Include="wwwroot\assets\fonts\fontawesome-webfont.woff2" />

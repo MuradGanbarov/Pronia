@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0cRNYxITRu8/joc17QJAeU5I342PkXHvYDJHtsbi/+Y=",
+  "Hash": "y518YBknyc8wxMMdFMyDG4B27xiVVigYlFeyx6U8V78=",
   "Source": "Pronia",
   "BasePath": "_content/Pronia",
   "Mode": "Default",
@@ -1122,6 +1122,40 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\payment\\1.png"
     },
     {
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Astra.jpg",
+      "SourceId": "Pronia",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
+      "BasePath": "_content/Pronia",
+      "RelativePath": "assets/images/product/Astra.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Astra.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Astra2.jpg",
+      "SourceId": "Pronia",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
+      "BasePath": "_content/Pronia",
+      "RelativePath": "assets/images/product/Astra2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Astra2.jpg"
+    },
+    {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Fialka.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
@@ -1188,6 +1222,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Gerberi2.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Gvozdika.jpg",
+      "SourceId": "Pronia",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
+      "BasePath": "_content/Pronia",
+      "RelativePath": "assets/images/product/Gvozdika.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Gvozdika.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Gvozdika2.jpg",
+      "SourceId": "Pronia",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
+      "BasePath": "_content/Pronia",
+      "RelativePath": "assets/images/product/Gvozdika2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Gvozdika2.jpg"
     },
     {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Xrizontema.jpg",
@@ -1581,12 +1649,12 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Orxideya2.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\pioni.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Pioni.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/pioni.jpg",
+      "RelativePath": "assets/images/product/Pioni.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1595,15 +1663,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\pioni.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Pioni.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\pioni2.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Pioni2.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/pioni2.jpg",
+      "RelativePath": "assets/images/product/Pioni2.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1612,15 +1680,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\pioni2.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Pioni2.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\rose.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Rose.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/rose.jpg",
+      "RelativePath": "assets/images/product/Rose.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1629,15 +1697,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\rose.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Rose.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\rose2.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Rose2.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/rose2.jpg",
+      "RelativePath": "assets/images/product/Rose2.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1646,7 +1714,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\rose2.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Rose2.jpg"
     },
     {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\small-size\\1-1-112x124.png",

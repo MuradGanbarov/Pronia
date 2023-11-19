@@ -16,12 +16,12 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Murad\Desktop\Pronia\Pronia
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Murad/Desktop/Pronia/Pronia/Views/About/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJvdXRcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Murad/Desktop/Pronia/Pronia/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Murad/Desktop/Pronia/Pronia/Views/Product/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Murad/Desktop/Pronia/Pronia/Views/Shared/_Layout.cshtml]
