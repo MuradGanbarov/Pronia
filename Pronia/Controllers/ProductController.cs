@@ -27,14 +27,23 @@ namespace Pronia.Controllers
                 return BadRequest();
             }
 
-            Product product = _context.Products.Include(p=>p.productImages).Include(p=>p.Category).FirstOrDefault(p => p.Id == id);
+            Product product = _context.Products.
+            Include(p => p.productImages).
+            Include(p => p.Category).
+            Include(p=>p.ProductColors).
+            ThenInclude(pc=>pc.Color).
+            Include(p=>p.ProductSizes).
+            ThenInclude(ps=>ps.Size).
+            Include(p => p.ProductTags).
+            ThenInclude(pt=>pt.Tag).
+            FirstOrDefault(p => p.Id == id);
             
             if(product == null)
             {
                 return NotFound();
             }
 
-            List<Product> SimilarProducts = _context.Products.Include(product => product.productImages).Where(p => p.CategoryId == product.CategoryId && product.Id != p.Id).Take(4).ToList();
+            List<Product> SimilarProducts = _context.Products.Include(product => product.productImages.Where(pi=>pi.IsPrimary!=null)).Where(p => p.CategoryId == product.CategoryId && product.Id != p.Id).Take(4).ToList();
 
             ProductVMcs productVMcs = new ProductVMcs
             {

@@ -28,7 +28,7 @@
                 <div class="single-product-img">
                   <div class="swiper-container single-product-slider">
                     <div class="swiper-wrapper">
-                        @foreach(ProductImage image in Model.Product.productImages)
+                        @foreach(ProductImage image in Model.Product.productImages.OrderByDescending(pi=>pi.IsPrimary).ToList())
                         {
                             <div class="swiper-slide">
                                 <a href="~/assets/images/product/@image.URL"
@@ -45,7 +45,7 @@
                   <div class="thumbs-arrow-holder">
                     <div class="swiper-container single-product-thumbs">
                       <div class="swiper-wrapper">
-                        @foreach(ProductImage image in Model.Product.productImages)
+                        @foreach(ProductImage image in Model.Product.productImages.OrderByDescending(i=>i.IsPrimary).ToList())
                         {
                             <a href="#" class="swiper-slide">
                                 <img class="img-full"
@@ -91,22 +91,25 @@
                   <div class="selector-wrap color-option">
                     <span class="selector-title border-bottom-0">Color</span>
                     <select class="nice-select wide border-bottom-0 rounded-0">
-                      <option value="default">Black & White</option>
-                      <option value="blue">Blue</option>
-                      <option value="green">Green</option>
-                      <option value="red">Red</option>
+                    @foreach(ProductColor color in Model.Product.ProductColors)
+                    {
+                        <option value="default">@color.Color.Name</option>
+                    }
+                      
                     </select>
                   </div>
                   <div class="selector-wrap size-option">
                     <span class="selector-title">Size</span>
                     <select class="nice-select wide rounded-0">
-                      <option value="medium">Medium Size & Poot</option>
-                      <option value="large">Large Size With Poot</option>
-                      <option value="small">Small Size With Poot</option>
+                      @foreach(ProductSize size in Model.Product.ProductSizes)
+                      {
+                        <option value="medium">@size.Size.Name</option>
+                      }
+                      
                     </select>
                   </div>
                   <p class="short-desc">
-                    @Model.Product.Description
+                    @(Model.Product.Description.Length<100?Model.Product.Description : Model.Product.Description.Substring(0,100)+"...");
                   </p>
                   <ul class="quantity-with-btn">
                     <li class="quantity">
@@ -202,9 +205,12 @@
                   <div class="product-category product-tags">
                     <span class="title">Tags :</span>
                     <ul>
+                      @foreach(ProductTag ptag in Model.Product.ProductTags)
+                      {  
                       <li>
-                        <a href="#">Furniture</a>
+                        <a href="#">@ptag.Tag.Name@(ptag!=Model.Product.ProductTags[Model.Product.ProductTags.Count-1]?",":"")</a>
                       </li>
+                      }
                     </ul>
                   </div>
                   <div
@@ -519,13 +525,13 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide product-item">
                                     <div class="product-img">
-                                        <a href="product/detail/@product.Id">
+                                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
                                             <img class="primary-img"
                                                  src="~/assets/images/product/@product.productImages.FirstOrDefault(image=>image.IsPrimary==true).URL"
-                                                 alt="Product Images" />
+                                                 alt="@product.Name" />
                                             <img class="secondary-img"
                                                  src="~/assets/images/product/@product.productImages.FirstOrDefault(image=>image.IsPrimary==false).URL"
-                                                 alt="Product Images" />
+                                                 alt="@product.Name" />
                                         </a>
                                         <div class="product-add-action">
                                             <ul>
@@ -568,8 +574,8 @@
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <a class="product-name"
-                                           href="single-product-variable.html">@product.Name</a>
+                                        <a class="product-name" asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">@product.Name</a>
+                                           
                                         <div class="price-box pb-1">
                                             <span class="new-price">@product.Price</span>
                                         </div>

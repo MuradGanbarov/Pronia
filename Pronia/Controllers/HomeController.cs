@@ -17,7 +17,7 @@ namespace Pronia.Controllers
         public IActionResult Index()
         {
             List<Slide> slides=_context.Slides.OrderBy(s=>s.Order).Take(2).ToList();
-            List<Product> products = _context.Products.Include(p=>p.productImages).OrderByDescending(s => s.Id).ToList();
+            List<Product> products = _context.Products.Include(p=>p.productImages.Where(pi=>pi.IsPrimary!=null)).OrderByDescending(s => s.Id).ToList();
 
 
             HomeVMcs vm = new()
