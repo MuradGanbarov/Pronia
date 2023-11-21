@@ -20,14 +20,14 @@ namespace Pronia.Controllers
         //    return View();
         //}
 
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             if(id <=0)
             {
                 return BadRequest();
             }
 
-            Product product = _context.Products.
+            Product product = await _context.Products.
             Include(p => p.productImages).
             Include(p => p.Category).
             Include(p=>p.ProductColors).
@@ -36,14 +36,14 @@ namespace Pronia.Controllers
             ThenInclude(ps=>ps.Size).
             Include(p => p.ProductTags).
             ThenInclude(pt=>pt.Tag).
-            FirstOrDefault(p => p.Id == id);
+            FirstOrDefaultAsync(p => p.Id == id);
             
             if(product == null)
             {
                 return NotFound();
             }
 
-            List<Product> SimilarProducts = _context.Products.Include(product => product.productImages.Where(pi=>pi.IsPrimary!=null)).Where(p => p.CategoryId == product.CategoryId && product.Id != p.Id).Take(4).ToList();
+            List<Product> SimilarProducts = await _context.Products.Include(product => product.productImages.Where(pi=>pi.IsPrimary!=null)).Where(p => p.CategoryId == product.CategoryId && product.Id != p.Id).Take(4).ToListAsync();
 
             ProductVMcs productVMcs = new ProductVMcs
             {

@@ -11,8 +11,13 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapControllerRoute(
+    "Category",
+    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     "default",
     "{controller=home}/{action=index}/{id?}"
     );
+
 
 app.Run();
