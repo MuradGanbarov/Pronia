@@ -43,8 +43,8 @@
                                         @tag.ProductTags.Count
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning btn-info"><i class="mdi mdi-pencil"></i></a>
-                                        <a class="btn btn-danger btn-info"><i class="mdi mdi-delete"></i></a>
+                                        <a asp-action="update" asp-route-id="@tag.Id" class="btn btn-warning btn-info"><i class="mdi mdi-pencil"></i></a>
+                                        <a asp-action="delete" asp-route-id="@tag.Id" class="btn btn-danger btn-info"><i class="mdi mdi-delete"></i></a>
                                         <a class="btn btn-success btn-info"><i class="mdi mdi-open-in-new"></i></a>
                                     </td>
                                     <td>

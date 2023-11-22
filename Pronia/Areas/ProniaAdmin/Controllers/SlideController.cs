@@ -28,24 +28,34 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Slide slide)
         {
-            if (!ModelState.IsValid)
+            if (slide.Photo is null)
             {
+                ModelState.AddModelError("Photo", "Mutleq shekil sechilmelidir");
                 return View();
             }
-
-            bool result = _context.Slides.Any(t => t.Title.ToLower().Trim() == slide.Title.ToLower().Trim());
-
-            if (result)
+            if (slide.Photo.ContentType.Contains("image/"))
             {
-                ModelState.AddModelError("Name", "Bele bir category artiq movcuddur");
+                ModelState.AddModelError("Photo", "File tipi uygun deyil");
                 return View();
             }
+            if (slide.Photo.Length > 2 * 1024 * 1024)
+            {
+                ModelState.AddModelError("Photo", "Sheklin hecmi 2 mb-den olmamalidir");
+            }
+
+            FileStream file = new FileStream(@"C:\Users\Murad\Desktop\Pronia\Pronia\wwwroot\assets\images\slider\" + slide.Photo.FileName, FileMode.Create);
+
+            await slide.Photo.CopyToAsync(file);
+            file.Close();
+            slide.ImageURL = slide.Photo.FileName;
 
             await _context.Slides.AddAsync(slide);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
+            
 
-        }
+
+        }  
     }
 }

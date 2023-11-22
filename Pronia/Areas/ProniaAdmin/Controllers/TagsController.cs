@@ -47,6 +47,57 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            if (id <= 0) return BadRequest();
+            Tag tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (tag is null) return NotFound();
+
+            return View(tag);
+
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Tag tag)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            if (existed is null) return NotFound();
+
+            bool result = _context.Categories.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim() && t.Id != id);
+            if (result)
+            {
+                ModelState.AddModelError("Name", "Bele bir tag hal hazirda var");
+                return View();
+            }
+
+            existed.Name = tag.Name;
+            _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest();
+
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (existed is null) return NotFound();
+
+            _context.Tags.Remove(existed);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
 

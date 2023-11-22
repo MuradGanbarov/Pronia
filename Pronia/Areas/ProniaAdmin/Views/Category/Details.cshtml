@@ -1,12 +1,12 @@
-﻿@* @model List<Product>
+﻿@model List<Product>
 @foreach (Product product in Model)
 {
     <div class="card" style="width: 20rem;">
-        <img src=/assets/images/product/@product.productImages class="card-img-top" alt="@product.Description">
+        <img src=/assets/images/product/@product.Name class="card-img-top" alt="@product.Description">
         <div class="card-body">
             <h5 class="card-title">@product.</h5>
             <p class="card-text">@product.Description</p>
             <a asp-action="Index" asp-controller="category" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
-} *@
+}
