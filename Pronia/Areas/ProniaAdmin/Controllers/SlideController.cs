@@ -2,23 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using Pronia.DAL;
 using Pronia.Models;
+using System.Collections.Generic;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
     [Area("ProniaAdmin")]
-    public class TagsController : Controller
+    public class SlideController : Controller
     {
+        
         private readonly AppDbContext _context;
-        public TagsController(AppDbContext context)
+        public SlideController(AppDbContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> Index()
         {
-
-
-            List<Tag> Tags = await _context.Tags.Include(t => t.ProductTags).ToListAsync();
-            return View(Tags);
+            List<Slide> slides = await _context.Slides.ToListAsync();
+            return View(slides);
         }
         public IActionResult Create()
         {
@@ -26,27 +26,26 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create(Slide slide)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim());
+            bool result = _context.Slides.Any(t => t.Title.ToLower().Trim() == slide.Title.ToLower().Trim());
 
             if (result)
             {
-                ModelState.AddModelError("Name","Bele bir tag artiq movcuddur");
+                ModelState.AddModelError("Name", "Bele bir category artiq movcuddur");
                 return View();
             }
 
-            await _context.Tags.AddAsync(tag);
+            await _context.Slides.AddAsync(slide);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
 
         }
     }
 }
-

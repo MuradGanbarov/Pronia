@@ -48,5 +48,43 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction("Index");
 
         }
+        
+        public async Task<IActionResult> Update(int id)
+        {
+            if (id <= 0) return BadRequest();
+            Category category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id == id);
+            
+            if (category is null) return NotFound();
+
+            return View(category);
+
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Category category)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Category existed = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
+            if(existed is null) return NotFound();
+
+            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim());
+            if (result)
+            {
+                ModelState.AddModelError("Name","Bele bir kateqoriya hal hazirda var");
+                return View();
+            }
+
+            existed.Name = category.Name;
+            _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            
+
+        }
+
+
     }
 }

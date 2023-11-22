@@ -9,6 +9,6 @@ namespace Pronia.Models
         [MaxLength(25, ErrorMessage = "Uzunluqu 25 xarakterden chox olmamalidir")]
         public string Name { get; set; }
 
-        public List<ProductTag> ProductTags { get; set; }
+        public List<ProductTag>? ProductTags { get; set; }
     }
 }
