@@ -17,7 +17,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         {
 
 
-            List<Tag> tags = await _context.Tags.Include(t => t.ProductTags).ThenInclude(pt=>pt.Product.Name).ToListAsync();
+            List<Tag> tags = await _context.Tags.Include(t => t.ProductTags).ToListAsync();
             return View(tags);
         }
         public IActionResult Create()
@@ -26,22 +26,22 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Tag tags)
+        public async Task<IActionResult> Create(Tag tag)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == t.Name.ToLower().Trim());
+            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim());
 
             if (result)
             {
-                ModelState.AddModelError("Name", "Bele bir category artiq movcuddur");
+                ModelState.AddModelError("Name","Bele bir tag artiq movcuddur");
                 return View();
             }
 
-            await _context.Tags.AddAsync(tags);
+            await _context.Tags.AddAsync(tag);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

@@ -32,6 +32,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvbmlhQWRtaW5cVmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Murad/Desktop/Pronia/Pronia/Areas/ProniaAdmin/Views/Tags/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvbmlhQWRtaW5cVmlld3NcVGFnc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Murad/Desktop/Pronia/Pronia/Areas/ProniaAdmin/Views/Tags/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvbmlhQWRtaW5cVmlld3NcVGFnc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
