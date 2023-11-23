@@ -132,7 +132,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\ProniaAdmin\Data\" />
-    <Folder Include="Areas\ProniaAdmin\Models\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
+using Pronia.Areas.ProniaAdmin.Models.Utilities.Enums;
+using Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions;
 using Pronia.DAL;
 using Pronia.Models;
 using System.Collections.Generic;
@@ -11,9 +14,11 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
     {
         
         private readonly AppDbContext _context;
-        public SlideController(AppDbContext context)
+        private readonly IWebHostEnvironment _env;
+        public SlideController(AppDbContext context,IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
         public async Task<IActionResult> Index()
         {
@@ -28,41 +33,52 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Slide slide)
         {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
             if (slide.Photo is null)
             {
                 ModelState.AddModelError("Photo", "Mutleq shekil sechilmelidir");
                 return View();
             }
-            if (slide.Photo.ContentType.Contains("image/"))
+            if (!slide.Photo.IsValidType(FileType.Image))
             {
-                ModelState.AddModelError("Photo", "File tipi uygun deyil");
-                return View();
+                ModelState.AddModelError("Photo", "File'in type uygun deyil");
+                return View();            
             }
-            if (slide.Photo.Length > 2 * 1024 * 1024)
+            if (!slide.Photo.IsValidSize(2,FileSize.Megabite))
             {
                 ModelState.AddModelError("Photo", "Sheklin hecmi 2 mb-den olmamalidir");
-            }
-            if (!ModelState.IsValid)
-            {
                 return View();
             }
-            if(slide.Order <= 0)
+            
+            if (slide.Order <= 0)
             {
-                ModelState.AddModelError("Order","Order 0 dan kichik yada 0 beraber olmali deyil");
+                ModelState.AddModelError("Order", "Order 0 dan kichik yada 0 beraber olmali deyil");
             }
 
-            FileStream file = new FileStream(@"C:\Users\Murad\Desktop\Pronia\Pronia\wwwroot\assets\images\slider\" + slide.Photo.FileName, FileMode.Create);
-
-            await slide.Photo.CopyToAsync(file);
-            file.Close();
-            slide.ImageURL = slide.Photo.FileName;
+            slide.ImageURL = await slide.Photo.CreateAsync(_env.WebRootPath,"assets","images","slider");
 
             await _context.Slides.AddAsync(slide);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
-   
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest();
+            Slide slide = await _context.Slides.FirstOrDefaultAsync(s => s.Id == id);
+            if (slide is null) return NotFound();
+            slide.ImageURL.Delete(_env.WebRootPath,"assets","images","slider");
+            _context.Slides.Remove(slide);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
         public async Task<IActionResult> Details(int id)
         {
             if (id <= 0) return BadRequest();
