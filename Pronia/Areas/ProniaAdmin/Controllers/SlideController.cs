@@ -42,6 +42,14 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             {
                 ModelState.AddModelError("Photo", "Sheklin hecmi 2 mb-den olmamalidir");
             }
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            if(slide.Order <= 0)
+            {
+                ModelState.AddModelError("Order","Order 0 dan kichik yada 0 beraber olmali deyil");
+            }
 
             FileStream file = new FileStream(@"C:\Users\Murad\Desktop\Pronia\Pronia\wwwroot\assets\images\slider\" + slide.Photo.FileName, FileMode.Create);
 
@@ -53,9 +61,16 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+   
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id <= 0) return BadRequest();
+            Slide slide = await _context.Slides.FirstOrDefaultAsync(s=>s.Id == id);
+            if(slide is null) return NotFound();
+            return View(slide);
             
 
-
-        }  
+        }
     }
 }
