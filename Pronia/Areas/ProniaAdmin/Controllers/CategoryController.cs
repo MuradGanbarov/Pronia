@@ -18,7 +18,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         {
 
 
-            List<Category> categories = await _context.Categories.Include(c => c.Products).ToListAsync();
+            List<Category>? categories = await _context.Categories.Include(c => c.Products).ToListAsync();
             return View(categories);
         }
         public IActionResult Create()
@@ -52,7 +52,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
-            Category category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id == id);
+            Category? category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id == id);
             
             if (category is null) return NotFound();
 
@@ -68,7 +68,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 return View();
             }
 
-            Category existed = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
+            Category? existed = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
             if(existed is null) return NotFound();
             
             bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim()&&c.Id!=id);
@@ -100,14 +100,13 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> Details(int id)
-        //{
-        //    if(id <=0) return BadRequest();
-        //    Category category = await _context.Categories.Include(c => c.Products).FirstOrDefaultAsync(c=>c.Id==id);
-        //    if(category is null) return NotFound();
-        //    return View(category);
-        //}
+        public async Task<IActionResult> Details(int id)
+        {
+            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            List<Product>? products = await _context.Products.Include(p=>p.productImages).Where(p => p.CategoryId == id).ToListAsync();
+            return View(products);
+        }
         
-        
+
     }
 }
