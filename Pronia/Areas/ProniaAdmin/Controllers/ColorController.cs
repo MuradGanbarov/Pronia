@@ -6,19 +6,16 @@ using Pronia.Models;
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
     [Area("ProniaAdmin")]
-    public class TagsController : Controller
+    public class ColorController : Controller
     {
         private readonly AppDbContext _context;
-        public TagsController(AppDbContext context)
+        public ColorController(AppDbContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> Index()
         {
-
-
-            List<Tag> Tags = await _context.Tags.Include(t => t.ProductTags).ToListAsync();
-            return View(Tags);
+            return View();
         }
         public IActionResult Create()
         {
@@ -26,22 +23,22 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create(Color color)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim());
+            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim());
 
             if (result)
             {
-                ModelState.AddModelError("Name","Bele bir tag artiq movcuddur");
+                ModelState.AddModelError("Name", "Bele bir tag artiq movcuddur");
                 return View();
             }
 
-            await _context.Tags.AddAsync(tag);
+            await _context.Colors.AddAsync(color);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -51,33 +48,33 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
-            Tag tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            Color color = await _context.Colors.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (tag is null) return NotFound();
+            if (color is null) return NotFound();
 
-            return View(tag);
+            return View(color);
 
 
         }
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Tag tag)
+        public async Task<IActionResult> Update(int id, Color color)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            Color existed = await _context.Colors.FirstOrDefaultAsync(c => c.Id == id);
             if (existed is null) return NotFound();
 
-            bool result = _context.Categories.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim() && t.Id != id);
+            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim() && t.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele bir tag hal hazirda var");
                 return View();
             }
 
-            existed.Name = tag.Name;
+            existed.Name = color.Name;
             _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
@@ -88,11 +85,11 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         {
             if (id <= 0) return BadRequest();
 
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            Color existed = await _context.Colors.FirstOrDefaultAsync(c => c.Id == id);
 
             if (existed is null) return NotFound();
 
-            _context.Tags.Remove(existed);
+            _context.Colors.Remove(existed);
 
             await _context.SaveChangesAsync();
 
@@ -104,16 +101,20 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             if (id <= 0) return BadRequest();
 
-            Tag tag =  await _context.Tags.Include(t=>t.ProductTags).ThenInclude(pt=>pt.Product).ThenInclude(p=>p.productImages).FirstOrDefaultAsync(t => t.Id == id);
+            Color color = await _context.Colors.Include(t => t.ProductColors).ThenInclude(pc => pc.Product).ThenInclude(p => p.productImages).FirstOrDefaultAsync(t => t.Id == id);
 
 
-            if (tag is null) return NotFound();
+            if (color is null) return NotFound();
 
 
-            return View(tag);
+            return View(color);
 
 
         }
     }
+
+
+
+
 }
 

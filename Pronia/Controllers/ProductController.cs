@@ -27,7 +27,7 @@ namespace Pronia.Controllers
                 return BadRequest();
             }
 
-            Product product = await _context.Products.
+            Product? product = await _context.Products.
             Include(p => p.productImages).
             Include(p => p.Category).
             Include(p=>p.ProductColors).

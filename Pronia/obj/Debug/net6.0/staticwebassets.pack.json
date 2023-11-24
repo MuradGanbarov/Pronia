@@ -825,6 +825,10 @@
       "PackagePath": "staticwebassets\\assets\\images\\sidebar\\banner\\1-270x300.jpg"
     },
     {
+      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\0f790fc9-acfb-47bd-81bc-1643ee4d36f9.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\slider\\0f790fc9-acfb-47bd-81bc-1643ee4d36f9.jpg"
+    },
+    {
       "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\bg\\1-1.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\slider\\bg\\1-1.jpg"
     },
@@ -863,10 +867,6 @@
     {
       "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\slide3.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\slider\\slide3.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\slide4.jpg",
-      "PackagePath": "staticwebassets\\assets\\images\\slider\\slide4.jpg"
     },
     {
       "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\testimonial\\bg\\1-1-1820x443.jpg",

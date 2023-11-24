@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JrbITkhR58hP9XUpmCkl+lUT3XRMCkSu/9SUVeJfK8I=",
+  "Hash": "wJZB/jJhpyJpXu8dmgKuewg1SKLRoxvWNZghfoGC07c=",
   "Source": "Pronia",
   "BasePath": "_content/Pronia",
   "Mode": "Default",
@@ -3519,6 +3519,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\sidebar\\banner\\1-270x300.jpg"
     },
     {
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\0f790fc9-acfb-47bd-81bc-1643ee4d36f9.jpg",
+      "SourceId": "Pronia",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
+      "BasePath": "_content/Pronia",
+      "RelativePath": "assets/images/slider/0f790fc9-acfb-47bd-81bc-1643ee4d36f9.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\slider\\0f790fc9-acfb-47bd-81bc-1643ee4d36f9.jpg"
+    },
+    {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\bg\\1-1.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
@@ -3636,23 +3653,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\slider\\slide3.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\slide4.jpg",
-      "SourceId": "Pronia",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
-      "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/slider/slide4.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\slider\\slide4.jpg"
     },
     {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\slide-img\\2-1-960x741.jpg",

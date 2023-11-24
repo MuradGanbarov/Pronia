@@ -1,0 +1,26 @@
+﻿@model Tag
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Image</th>
+            <th scope="col">Product SKU</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product Description</th>
+        </tr>
+    </thead>
+    @foreach(ProductTag tag in Model.ProductTags)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@tag.Product.Id</th>
+                <td><img src="~/assets/images/product/@tag.Product.productImages.FirstOrDefault(pi=>pi.IsPrimary==true).URL" /></td>
+                <td>@tag.Product.SKU</td>
+                <td>@tag.Product.Price</td>
+                <td>@tag.Product.Description</td>
+            </tr>
+
+        </tbody>
+    }
+</table>
