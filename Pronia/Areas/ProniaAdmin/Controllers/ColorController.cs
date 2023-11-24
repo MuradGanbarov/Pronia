@@ -15,7 +15,8 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View();
+            List<Color> colors = await _context.Colors.Include(c => c.ProductColors).ThenInclude(pc=>pc.Product).ToListAsync();
+            return View(colors);
         }
         public IActionResult Create()
         {
@@ -67,7 +68,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             Color existed = await _context.Colors.FirstOrDefaultAsync(c => c.Id == id);
             if (existed is null) return NotFound();
 
-            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim() && t.Id != id);
+            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim() && c.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele bir tag hal hazirda var");
@@ -101,7 +102,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             if (id <= 0) return BadRequest();
 
-            Color color = await _context.Colors.Include(t => t.ProductColors).ThenInclude(pc => pc.Product).ThenInclude(p => p.productImages).FirstOrDefaultAsync(t => t.Id == id);
+            Color color = await _context.Colors.Include(c => c.ProductColors).ThenInclude(pc => pc.Product).ThenInclude(p => p.productImages).FirstOrDefaultAsync(t => t.Id == id);
 
 
             if (color is null) return NotFound();

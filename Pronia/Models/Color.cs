@@ -1,9 +1,12 @@
-﻿namespace Pronia.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Pronia.Models
 {
     public class Color
     {
         public int Id { get; set; }
+        
         public string Name { get; set; }
-        public List<ProductColor> ProductColors { get; set; }
+        public List<ProductColor>? ProductColors { get; set; }
     }
 }
