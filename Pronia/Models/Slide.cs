@@ -19,6 +19,6 @@ namespace Pronia.Models
         public string? ImageURL { get; set; }
         public int Order { get; set; }
         [NotMapped]
-        public IFormFile Photo { get; set; }
+        public IFormFile? Photo { get; set; }
     }
 }

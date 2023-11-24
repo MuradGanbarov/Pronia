@@ -6,6 +6,7 @@ using Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions;
 using Pronia.DAL;
 using Pronia.Models;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
@@ -77,6 +78,58 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            if(id<=0) return BadRequest();
+            Slide existed = await _context.Slides.FirstOrDefaultAsync(s=>s.Id == id);
+            if (existed is null) return NotFound();
+
+            return View(existed);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Slide slide)
+        {
+            Slide existed = _context.Slides.FirstOrDefault(s=>s.Id == id);
+            if (existed is null) return NotFound();
+            if (!ModelState.IsValid)
+            {
+                return View(slide);
+            }
+            
+            if (slide.Photo is not null)
+            {
+                
+                if (!slide.Photo.IsValidType(FileType.Image))
+                {
+                    ModelState.AddModelError("Photo", "File'in type uygun deyil");
+                    return View();
+                }
+                if (!slide.Photo.IsValidSize(2, FileSize.Megabite))
+                {
+                    ModelState.AddModelError("Photo", "Sheklin hecmi 2 mb-den olmamalidir");
+                    return View();
+                }
+                string NewImage = await slide.Photo.CreateAsync(_env.WebRootPath, "assets", "images", "slider");
+                existed.ImageURL.Delete(_env.WebRootPath, "assets", "images", "slider");
+                existed.ImageURL = NewImage;
+
+            }
+
+            existed.Title = slide.Title;
+            existed.Description = slide.Description;
+            existed.SubTitle = slide.SubTitle;
+            existed.Order = slide.Order;
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+
+            
+
+            
+        }
+        
 
 
         public async Task<IActionResult> Details(int id)

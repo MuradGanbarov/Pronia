@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "t3TkbnCS0gjVMA3W38UtuEA2y9i1qKpGP/yvOZee4f8=",
+  "Hash": "JrbITkhR58hP9XUpmCkl+lUT3XRMCkSu/9SUVeJfK8I=",
   "Source": "Pronia",
   "BasePath": "_content/Pronia",
   "Mode": "Default",
@@ -3517,23 +3517,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\sidebar\\banner\\1-270x300.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\8256601b-fc5b-4d19-b096-fc3ab6ef948f5507847.png",
-      "SourceId": "Pronia",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
-      "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/slider/8256601b-fc5b-4d19-b096-fc3ab6ef948f5507847.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\slider\\8256601b-fc5b-4d19-b096-fc3ab6ef948f5507847.png"
     },
     {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\slider\\bg\\1-1.jpg",
