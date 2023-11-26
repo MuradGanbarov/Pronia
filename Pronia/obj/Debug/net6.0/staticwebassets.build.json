@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wJZB/jJhpyJpXu8dmgKuewg1SKLRoxvWNZghfoGC07c=",
+  "Hash": "e46oHPQyNDiDO63o2GfGjA75Nlc0/ijWKM5tOnJv7t0=",
   "Source": "Pronia",
   "BasePath": "_content/Pronia",
   "Mode": "Default",
@@ -3145,12 +3145,12 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Orxideya2.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Pioni.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\pioni.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/Pioni.jpg",
+      "RelativePath": "assets/images/product/pioni.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -3159,15 +3159,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Pioni.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\pioni.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Pioni2.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\pioni2.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/Pioni2.jpg",
+      "RelativePath": "assets/images/product/pioni2.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -3176,15 +3176,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Pioni2.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\pioni2.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Rose.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\rose.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/Rose.jpg",
+      "RelativePath": "assets/images/product/rose.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -3193,15 +3193,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Rose.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\rose.jpg"
     },
     {
-      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Rose2.jpg",
+      "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\rose2.jpg",
       "SourceId": "Pronia",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\",
       "BasePath": "_content/Pronia",
-      "RelativePath": "assets/images/product/Rose2.jpg",
+      "RelativePath": "assets/images/product/rose2.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -3210,7 +3210,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\Rose2.jpg"
+      "OriginalItemSpec": "wwwroot\\assets\\images\\product\\rose2.jpg"
     },
     {
       "Identity": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\small-size\\1-1-112x124.png",

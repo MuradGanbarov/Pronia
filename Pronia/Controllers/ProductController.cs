@@ -14,9 +14,6 @@ namespace Pronia.Controllers
             _context = context;
         }
 
-
-        
-
         public async Task<IActionResult> Detail(int id)
         {
             if(id <=0)

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Pronia.Areas.ProniaAdmin.ViewModels.Product;
 using Pronia.DAL;
 using Pronia.Models;
+using static Pronia.Areas.ProniaAdmin.ViewModels.Product.UpdateProductVMcs;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
@@ -75,14 +76,61 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
         //public async Task<IActionResult> Update(int id)
         //{
+        //    if(id <= 0) return BadRequest();
+        //    Product product = await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
 
+        //    if (product == null) return NotFound();
+
+        //    UpdateProductVM productVM = new UpdateProductVM
+        //    {
+        //        Name = product.Name,
+        //        Price = product.Price,
+        //        Description = product.Description,
+        //        SKU = product.SKU,
+        //        CategoryId = product.CategoryId,
+        //        Categories = await GetCategoriesAsync()
+        //    };
+        //    return View(productVM);
         //}
+
+
+        //[HttpPost]
+
+        //public async Task<IActionResult> Update (int id, UpdateProductVM productVM)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        Product findedProduct = await _context.Products.FirstOrDefaultAsync(p=>p.Id == id);
+                
+        //        productVM.Categories = await GetCategoriesAsync();
+        //        return View(productVM);
+        //    }
+
+        //    Product product = await _context.Products.Include(p=>p.CategoryId == id).FirstOrDefaultAsync(p => p.Id == id);
+
+        //    bool result = await _context.Products.AnyAsync(c => c.Id == productVM.CategoryId);
+        //    if (!result)
+        //    {
+        //        ModelState.AddModelError("CategoryId", "bele bir kateqoriya yoxdur");
+        //        productVM.Categories = await GetCategoriesAsync();
+        //        return View(productVM);
+        //    }
+
+            
+        //}
+
+
+
+      
+
 
         //public async Task<IActionResult> Details(int id)
         //{
         //    if(id <= 0) return BadRequest();
-        //    CreateProductVM productVM = await _context.Products.Include(p=>p.ProductColors).Include(p=>p.productImages.Where(pi=>pi.IsPrimary==true)).Include(p=>p.ProductTags).Include(p=>p.ProductSizes).ToListAsync();
+        //    Product product = await _context.Products.Include(p => p.productImages.Where(pi => pi.IsPrimary == true)).Include(p => p.Category).Include(p => p.ProductTags).ThenInclude(pt => pt.Tag).Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Include(p => p.ProductSizes).ThenInclude(ps => ps.Size).FirstOrDefaultAsync(p => p.Id == id);
+        //    return View(product);
         //}
+
 
         private async Task<List<Category>> GetCategoriesAsync()
         {

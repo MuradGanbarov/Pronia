@@ -669,22 +669,6 @@
       "PackagePath": "staticwebassets\\assets\\images\\product\\Orxideya2.jpg"
     },
     {
-      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Pioni.jpg",
-      "PackagePath": "staticwebassets\\assets\\images\\product\\Pioni.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Pioni2.jpg",
-      "PackagePath": "staticwebassets\\assets\\images\\product\\Pioni2.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Rose.jpg",
-      "PackagePath": "staticwebassets\\assets\\images\\product\\Rose.jpg"
-    },
-    {
-      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Rose2.jpg",
-      "PackagePath": "staticwebassets\\assets\\images\\product\\Rose2.jpg"
-    },
-    {
       "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\Xrizontema.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\product\\Xrizontema.jpg"
     },
@@ -751,6 +735,22 @@
     {
       "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\medium-size\\1-9-270x300.jpg",
       "PackagePath": "staticwebassets\\assets\\images\\product\\medium-size\\1-9-270x300.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\pioni.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\product\\pioni.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\pioni2.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\product\\pioni2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\rose.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\product\\rose.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\rose2.jpg",
+      "PackagePath": "staticwebassets\\assets\\images\\product\\rose2.jpg"
     },
     {
       "Id": "C:\\Users\\Murad\\Desktop\\Pronia\\Pronia\\wwwroot\\assets\\images\\product\\small-size\\1-1-112x124.png",

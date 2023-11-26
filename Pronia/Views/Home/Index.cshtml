@@ -154,10 +154,10 @@
                                             <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
                                                 <img class="primary-img"
                                                      src="~/assets/images/product/@product.productImages.FirstOrDefault(pi=>pi.IsPrimary==true).URL"
-                                                     alt="Product Images" />
+                                                     alt="Product Images"/>
                                                 <img class="secondary-img"
                                                      src="~/assets/images/product/@product.productImages.FirstOrDefault(pi=>pi.IsPrimary==false).URL"
-                                                     alt="Product Images" />
+                                                     alt="Product Images"/>
                                             </a>
                                             <div class="product-add-action">
                                                 <ul>

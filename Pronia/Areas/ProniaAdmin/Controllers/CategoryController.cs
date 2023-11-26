@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ProniaAdmin.ViewModels.Category;
 using Pronia.Areas.ViewModels.Category;
 using Pronia.DAL;
 using Pronia.Models;
@@ -57,37 +58,36 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
-            Category? category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id == id);
+            Category category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id == id);
             
             if (category is null) return NotFound();
-
-            return View(category);
+            UpdateCategoryVM categoryVM = new UpdateCategoryVM { Name = category.Name };
+            return View(categoryVM);
 
 
         }
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Category category)
+        public async Task<IActionResult> Update(int id, UpdateCategoryVM categoryVM)
         {
             if(!ModelState.IsValid)
             {
-                return View();
+                return View(categoryVM);
             }
 
-            Category? existed = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
-            if(existed is null) return NotFound();
+            Category category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
+            if(category is null) return NotFound();
             
-            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim()&&c.Id!=id);
-            if (result)
+            bool ExistCheck = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim()&&c.Id!=id);
+            if (ExistCheck)
             {
                 ModelState.AddModelError("Name","Bele bir kateqoriya hal hazirda var");
-                return View();
-            }
+                return View(categoryVM);
+            };
 
-            existed.Name = category.Name;
+            if (category.Name == categoryVM.Name) return RedirectToAction(nameof(Index));
+            category.Name = categoryVM.Name;
             _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-            
-            
+            return RedirectToAction(nameof(Index));     
         }
 
         public async Task<IActionResult> Delete(int id)
