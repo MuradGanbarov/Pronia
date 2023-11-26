@@ -1,4 +1,5 @@
-﻿@model Slide
+﻿@using Pronia.Areas.ViewModels.Slide;
+@model CreateSlideVM
 <div class="row">
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
@@ -6,7 +7,7 @@
                 <h4 class="card-title">Update Slide</h4>
                 <form class="forms-sample" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                    <img src="~/assets/images/slider/@Model.ImageURL" />    
+                    <img src="~/assets/images/slider/@Model" />    
                     </div>
                     <div class="form-group">
                         <label asp-for="Photo">Choose new Photo</label>
@@ -29,7 +30,7 @@
                         <span class="text-danger" asp-validation-for="Order"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Description">Description</label>
+                        <label asp-for="@Model.Description">Description</label>
                         <input asp-for="Description" class="form-control" placeholder="Description">
                         <span class="text-danger" asp-validation-for="Description"></span>
                     </div>

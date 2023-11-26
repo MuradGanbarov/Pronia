@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ProniaAdmin.ViewModels.Color;
 using Pronia.DAL;
 using Pronia.Models;
 
@@ -24,20 +25,26 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Color color)
+        public async Task<IActionResult> Create(CreateColorVM colorVM)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == color.Name.ToLower().Trim());
+            bool result = _context.Colors.Any(c => c.Name.ToLower().Trim() == colorVM.Name.ToLower().Trim());
 
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele bir tag artiq movcuddur");
                 return View();
             }
+
+            Color color = new Color
+            {
+                Name = colorVM.Name,
+            };
+
 
             await _context.Colors.AddAsync(color);
             await _context.SaveChangesAsync();

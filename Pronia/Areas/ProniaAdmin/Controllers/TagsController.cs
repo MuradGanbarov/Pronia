@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ProniaAdmin.ViewModels.Tag;
 using Pronia.DAL;
 using Pronia.Models;
 
@@ -26,20 +27,25 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create(CreateTagVM tagVM)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tag.Name.ToLower().Trim());
+            bool result = _context.Tags.Any(t => t.Name.ToLower().Trim() == tagVM.Name.ToLower().Trim());
 
             if (result)
             {
                 ModelState.AddModelError("Name","Bele bir tag artiq movcuddur");
                 return View();
             }
+
+            Tag tag = new Tag
+            {
+                Name = tagVM.Name,
+            };
 
             await _context.Tags.AddAsync(tag);
             await _context.SaveChangesAsync();

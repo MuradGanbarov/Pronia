@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ViewModels.Category;
 using Pronia.DAL;
 using Pronia.Models;
 
@@ -16,8 +17,6 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-
-
             List<Category>? categories = await _context.Categories.Include(c => c.Products).ToListAsync();
             return View(categories);
         }
@@ -27,20 +26,26 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Category category)
+        public async Task<IActionResult> Create(CreateCategoryVM categoryVM)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim());
+            bool result = _context.Categories.Any(c => c.Name.ToLower().Trim() == categoryVM.Name.ToLower().Trim());
 
             if (result)
             {
                 ModelState.AddModelError("Name","Bele bir category artiq movcuddur");
                 return View();           
             }
+
+            Category category = new Category
+            {
+                Name = categoryVM.Name,
+            };
+
 
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();

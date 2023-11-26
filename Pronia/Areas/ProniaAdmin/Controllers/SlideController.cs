@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.ContentModel;
 using Pronia.Areas.ProniaAdmin.Models.Utilities.Enums;
 using Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions;
+using Pronia.Areas.ViewModels.Slide;
 using Pronia.DAL;
 using Pronia.Models;
-using System.Collections.Generic;
-using System.Drawing;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
@@ -32,35 +30,46 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Slide slide)
+        public async Task<IActionResult> Create(CreateSlideVM slideVM)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            if (slide.Photo is null)
-            {
-                ModelState.AddModelError("Photo", "Mutleq shekil sechilmelidir");
-                return View();
-            }
-            if (!slide.Photo.IsValidType(FileType.Image))
+            //if (slideVM.Photo is null)
+            //{
+            //    ModelState.AddModelError("Photo", "Mutleq shekil sechilmelidir");
+            //    return View();
+            //}
+            if (!slideVM.Photo.IsValidType(FileType.Image))
             {
                 ModelState.AddModelError("Photo", "File'in type uygun deyil");
-                return View();            
+                return View();
             }
-            if (!slide.Photo.IsValidSize(2,FileSize.Megabite))
+            if (!slideVM.Photo.IsValidSize(2, FileSize.Megabite))
             {
                 ModelState.AddModelError("Photo", "Sheklin hecmi 2 mb-den olmamalidir");
                 return View();
             }
-            
-            if (slide.Order <= 0)
+
+            if (slideVM.Order <= 0)
             {
                 ModelState.AddModelError("Order", "Order 0 dan kichik yada 0 beraber olmali deyil");
             }
 
-            slide.ImageURL = await slide.Photo.CreateAsync(_env.WebRootPath,"assets","images","slider");
+            string fileName = await slideVM.Photo.CreateAsync(_env.WebRootPath, "assets", "images", "slider");
+
+            Slide slide = new Slide 
+            {
+                ImageURL = fileName,
+                Title = slideVM.Title,
+                SubTitle = slideVM.SubTitle,
+                Description = slideVM.Description,
+                Order = (int)slideVM.Order
+            };
+            
+            
 
             await _context.Slides.AddAsync(slide);
             await _context.SaveChangesAsync();

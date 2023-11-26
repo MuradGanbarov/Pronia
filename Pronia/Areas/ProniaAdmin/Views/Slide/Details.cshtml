@@ -1,11 +1,12 @@
-﻿@model Slide
+﻿@using Pronia.Areas.ViewModels.Slide;
+@model CreateSlideVM
 
 
 <div class="row">
     <div class="col-xl-3 col-md-4 col-sm-6">
         <div class="card" style="width: 20rem;">
             <img class="primary-img"
-                 src="~/assets/images/slider/@Model.ImageURL"
+                 src="~/assets/images/slider/@Model.Photo"
                  alt="Product Images" />
             <div class="card-body">
                 <h5 class="card-title"><span>Title:</span>@Model.Title</h5>

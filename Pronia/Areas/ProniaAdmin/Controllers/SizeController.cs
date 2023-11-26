@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ProniaAdmin.ViewModels.Size;
 using Pronia.DAL;
 using Pronia.Models;
 using System.Drawing;
@@ -26,20 +27,26 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Size size)
+        public async Task<IActionResult> Create(CreateSizeVM sizeVM)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool result = _context.Sizes.Any(c => c.Name.ToLower().Trim() == size.Name.ToLower().Trim());
+            bool result = _context.Sizes.Any(c => c.Name.ToLower().Trim() == sizeVM.Name.ToLower().Trim());
 
             if (result)
             {
                 ModelState.AddModelError("Name", "Bele bir tag artiq movcuddur");
                 return View();
             }
+
+            Size size = new Size
+            {
+                Name = sizeVM.Name,
+            };
+
 
             await _context.Sizes.AddAsync(size);
             await _context.SaveChangesAsync();

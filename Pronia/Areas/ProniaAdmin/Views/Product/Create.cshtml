@@ -1,0 +1,45 @@
+﻿@using Pronia.Areas.ProniaAdmin.ViewModels.Product;
+
+@model CreateProductVM
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Create Product</h4>
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                    
+                    <div class="form-group">
+                        <label asp-for="Name">Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price">Price</label>
+                        <input asp-for="Price" class="form-control" placeholder="Price">
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SKU">SKU</label>
+                        <input asp-for="SKU" class="form-control" placeholder="SKU">
+                        <span class="text-danger" asp-validation-for="SKU"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description">Description</label>
+                        <input asp-for="Description" class="form-control" placeholder="Description">
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    <div class="form-control">
+                        <select asp-for="CategoryID" asp-items="new SelectList(Model.Categories,nameof(Category.Id),nameof(Category.Name))">
+                            <option type="Category" disabled selected value="CategoryID">Choose category</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="CategoryID"></span>
+                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                        <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<

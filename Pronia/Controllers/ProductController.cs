@@ -15,10 +15,7 @@ namespace Pronia.Controllers
         }
 
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        
 
         public async Task<IActionResult> Detail(int id)
         {
