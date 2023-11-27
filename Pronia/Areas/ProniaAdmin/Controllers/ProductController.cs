@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Pronia.Areas.ProniaAdmin.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
-using static Pronia.Areas.ProniaAdmin.ViewModels.UpdateProductVMcs;
+
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
@@ -18,15 +19,22 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<Product> products = await _context.Products.Include(p => p.Category).Include(p => p.productImages.Where(pi => pi.IsPrimary == true)).ToListAsync();
+            List<Product> products = await _context.Products.Include(p => p.Category).
+                Include(p => p.productImages.
+                Where(pi => pi.IsPrimary == true)).
+                Include(p=>p.ProductTags).ThenInclude(p=>p.Tag).ToListAsync();
             return View(products);
         }
 
         public async Task<IActionResult> Create()
         {
+            
             CreateProductVM productVM = new CreateProductVM
             {
                 Categories = await GetCategoriesAsync(),
+                Tags = await GetTagsAsync(),
+                Colors = await GetColorsAsync(),
+                Sizes = await GetSizesAsync(),
             };
             return View(productVM);
         }
@@ -37,6 +45,9 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             if (!ModelState.IsValid)
             {
                 productVM.Categories = await GetCategoriesAsync();
+                productVM.Tags = await GetTagsAsync();
+                productVM.Colors = await GetColorsAsync();
+                productVM.Sizes = await GetSizesAsync();
                 return View(productVM);
             }
 
@@ -46,7 +57,49 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             {
                 productVM.Categories = await GetCategoriesAsync();
                 ModelState.AddModelError("CategoryID", "Bele bir kateqoriya movcud deyil");
-                return View(productVM);
+                productVM.Tags = await GetTagsAsync();
+                ModelState.AddModelError("TagsIds", "Yanlish tag melumatlari gonderilib");
+                productVM.Colors = await GetColorsAsync();
+                ModelState.AddModelError("ColorIds", "Yanlish color melumatlari gonderilib");
+                productVM.Sizes = await GetSizesAsync();
+                ModelState.AddModelError("SizeIds", "Yanlish size melumatlari gonderilib");
+                return View();
+            }
+
+            foreach(int TagId in productVM.TagIds)
+            {
+                bool tagResult = await _context.Tags.AnyAsync(t => t.Id == TagId);
+                if (!tagResult)
+                {
+                    productVM.Categories = await GetCategoriesAsync();
+                    productVM.Tags = await GetTagsAsync();
+                    ModelState.AddModelError("TagsIds", "Yanlish tag melumatlari gonderilib");
+                    return View();
+                }
+            }
+
+            foreach(int ColorId in productVM.ColorIds)
+            {
+                bool colorResult = await _context.Colors.AnyAsync(c=>c.Id == ColorId);
+                if (!colorResult)
+                {
+                    productVM.Categories = await GetCategoriesAsync();
+                    productVM.Colors = await GetColorsAsync();
+                    ModelState.AddModelError("ColorIds", "Yanlish color melumatlari gonderilib");
+                    return View();
+                }
+            }
+
+            foreach(int SizeId in productVM.SizeIds)
+            {
+                bool sizeResult = await _context.Sizes.AnyAsync(s=>s.Id == SizeId);
+                if (!sizeResult)
+                {
+                    productVM.Categories=await GetCategoriesAsync();
+                    productVM.Sizes = await GetSizesAsync();
+                    ModelState.AddModelError("SizeIds","Yanlish size melumatlari gonderilib");
+                    return View();
+                }
             }
 
             Product product = new Product
@@ -55,8 +108,43 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 SKU = productVM.SKU,
                 Price = productVM.Price,
                 CategoryId = productVM.CategoryID,
-                Description = productVM.Description
+                Description = productVM.Description,
+                ProductTags = new List<ProductTag>(),
+                ProductColors = new List<ProductColor>(),
+                ProductSizes = new List<ProductSize>()
             };
+
+            
+
+            foreach(int tagId in productVM.TagIds)
+            {
+                ProductTag productTag = new ProductTag
+                {
+                    TagId = tagId,
+                };
+
+                product.ProductTags.Add(productTag);
+            }
+
+            foreach(int ColorId in productVM.ColorIds)
+            {
+                ProductColor productColor = new ProductColor
+                {
+                    ColorId = ColorId,
+                };
+
+                product.ProductColors.Add(productColor);
+            }
+            
+            foreach(int Id in productVM.SizeIds)
+            {
+                ProductSize productSize = new ProductSize
+                {
+                    SizeId = Id,
+                };
+
+                product.ProductSizes.Add(productSize);
+            }
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -90,6 +178,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 CategoryId=product.CategoryId,
                 Description = product.Description,
                 Categories=await _context.Categories.ToListAsync(),
+
             };
 
             return View(productVM);
@@ -136,11 +225,31 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         }
 
 
-        private async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<Category>> GetCategoriesAsync()
         {
             List<Category> categories = await _context.Categories.ToListAsync();
             return categories;
         }
+
+        public async Task<List<Tag>> GetTagsAsync()
+        {
+            List<Tag> tags = await _context.Tags.ToListAsync();
+            return tags;
+        }
+
+        public async Task<List<Color>> GetColorsAsync()
+        {
+            List<Color> colors = await _context.Colors.ToListAsync();
+            return colors;
+        }
+
+        public async Task<List<Size>> GetSizesAsync()
+        {
+            List<Size> sizes = await _context.Sizes.ToListAsync();
+            return sizes;
+        }
+
+
 
 
     }

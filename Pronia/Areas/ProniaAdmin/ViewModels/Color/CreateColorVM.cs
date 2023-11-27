@@ -1,6 +1,6 @@
 ﻿using Pronia.Models;
 
-namespace Pronia.Areas.ProniaAdmin.ViewModels.Color
+namespace Pronia.Areas.ProniaAdmin.ViewModels
 {
     public class CreateColorVM
     {

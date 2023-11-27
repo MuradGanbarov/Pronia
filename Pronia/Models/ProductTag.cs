@@ -1,4 +1,7 @@
-﻿namespace Pronia.Models
+﻿using Pronia.Models;
+
+
+namespace Pronia.Models
 {
     public class ProductTag
     {

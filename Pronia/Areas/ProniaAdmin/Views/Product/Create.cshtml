@@ -33,10 +33,27 @@
                             <option type="Category" disabled selected value="CategoryID">Choose category</option>
                         </select>
                         <span class="text-danger" asp-validation-for="CategoryID"></span>
-                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                        <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
                     </div>
-                    
+                    <div class="form-control">
+                        <select asp-for="TagIds" asp-items="new SelectList(Model.Tags,nameof(Tag.Id),nameof(Tag.Name))">
+                            <option type="Category" disabled selected value="TagIDs">Choose Tags</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="ColorIds"></span>
+                    </div>    
+                    <div class="form-control">
+                        <select asp-for="ColorIds" asp-items="new SelectList(Model.Colors,nameof(Color.Id),nameof(Color.Name))">
+                            <option type="Color" disabled selected value="ColorIds">Choose Color</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="ColorIds"></span>
+                    </div>    
+                    <div class="form-control">
+                        <select asp-for="SizeIds" asp-items="new SelectList(Model.Sizes,nameof(Size.Id),nameof(Size.Name))">
+                            <option type="SizeIds" disabled selected value="SizeIds">Choose category</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="SizeIds"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>

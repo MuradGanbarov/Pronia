@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pronia.Areas.ProniaAdmin.ViewModels.Size
+namespace Pronia.Areas.ProniaAdmin.ViewModels
 {
     public class CreateSizeVM
     {
