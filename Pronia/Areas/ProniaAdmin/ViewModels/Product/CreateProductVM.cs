@@ -1,7 +1,7 @@
 ﻿using Pronia.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pronia.Areas.ProniaAdmin.ViewModels.Product
+namespace Pronia.Areas.ProniaAdmin.ViewModels
 {
     public class CreateProductVM
     {

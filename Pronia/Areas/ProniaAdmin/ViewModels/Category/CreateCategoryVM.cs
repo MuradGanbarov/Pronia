@@ -1,9 +1,8 @@
 ﻿using Pronia.Models;
 
-namespace Pronia.Areas.ViewModels.Category
+namespace Pronia.Areas.ViewModels;
+
+public class CreateCategoryVM
 {
-    public class CreateCategoryVM
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

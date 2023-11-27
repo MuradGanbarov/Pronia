@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pronia.Areas.ProniaAdmin.ViewModels.Product;
+using Pronia.Areas.ProniaAdmin.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
-using static Pronia.Areas.ProniaAdmin.ViewModels.Product.UpdateProductVMcs;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
@@ -101,7 +100,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         //    if (!ModelState.IsValid)
         //    {
         //        Product findedProduct = await _context.Products.FirstOrDefaultAsync(p=>p.Id == id);
-                
+
         //        productVM.Categories = await GetCategoriesAsync();
         //        return View(productVM);
         //    }
@@ -116,20 +115,21 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         //        return View(productVM);
         //    }
 
-            
+
         //}
 
 
 
-      
 
 
-        //public async Task<IActionResult> Details(int id)
-        //{
-        //    if(id <= 0) return BadRequest();
-        //    Product product = await _context.Products.Include(p => p.productImages.Where(pi => pi.IsPrimary == true)).Include(p => p.Category).Include(p => p.ProductTags).ThenInclude(pt => pt.Tag).Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Include(p => p.ProductSizes).ThenInclude(ps => ps.Size).FirstOrDefaultAsync(p => p.Id == id);
-        //    return View(product);
-        //}
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            if (id <= 0) return BadRequest();
+            Product product = await _context.Products.Include(p => p.productImages.Where(pi => pi.IsPrimary == true)).Include(p => p.Category).Include(p => p.ProductTags).ThenInclude(pt => pt.Tag).Include(p => p.ProductColors).ThenInclude(pc => pc.Color).Include(p => p.ProductSizes).ThenInclude(ps => ps.Size).FirstOrDefaultAsync(p => p.Id == id);
+            if(product == null) return NotFound();
+            return View(product);
+        }
 
 
         private async Task<List<Category>> GetCategoriesAsync()

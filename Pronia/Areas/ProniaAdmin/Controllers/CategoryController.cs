@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pronia.Areas.ProniaAdmin.ViewModels.Category;
-using Pronia.Areas.ViewModels.Category;
+using Pronia.Areas.ProniaAdmin.ViewModels;
+using Pronia.Areas.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
 
