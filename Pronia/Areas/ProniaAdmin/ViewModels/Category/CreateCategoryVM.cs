@@ -1,6 +1,7 @@
 ﻿using Pronia.Models;
 
-namespace Pronia.Areas.ViewModels;
+
+namespace Pronia.Areas.ProniaAdmin.ViewModels;
 
 public class CreateCategoryVM
 {

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Pronia",
+    "\\Pronia\\Areas",
+    "\\Pronia\\Areas\\ProniaAdmin",
+    "\\Pronia\\Areas\\ProniaAdmin\\ViewModels",
+    "\\Pronia\\Areas\\ProniaAdmin\\ViewModels\\Category",
+    "\\Pronia\\Controllers",
+    "\\Pronia\\Views",
+    "\\Pronia\\Views\\Home",
+    "\\Pronia\\Views\\Product"
+  ],
+  "SelectedNode": "\\Pronia\\Controllers\\HomeController.cs",
+  "PreviewInSolutionExplorer": false
+}
