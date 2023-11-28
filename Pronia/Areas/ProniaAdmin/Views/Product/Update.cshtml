@@ -36,7 +36,27 @@
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                         <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
                     </div>
-                    
+                    <div class="form-control">
+                        <select asp-for="TagIds" asp-items="new SelectList(Model.Tags,nameof(Tag.Id),nameof(Tag.Name))">
+                        </select>
+                        <span class="text-danger" asp-validation-for="TagIds"></span>
+                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                        <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
+                    </div>
+                    <div class="form-control">
+                        <select asp-for="ColorIds" asp-items="new SelectList(Model.Colors,nameof(Color.Id),nameof(Color.Name))">
+                        </select>
+                        <span class="text-danger" asp-validation-for="ColorIds"></span>
+                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                        <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
+                    </div>
+                    <div class="form-control">
+                        <select asp-for="SizeIds" asp-items="new SelectList(Model.Sizes,nameof(Size.Id),nameof(Size.Name))">
+                        </select>
+                        <span class="text-danger" asp-validation-for="SizeIds"></span>
+                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                        <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
+                    </div>
                 </form>
             </div>
         </div>

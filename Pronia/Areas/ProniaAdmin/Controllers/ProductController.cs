@@ -167,7 +167,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
-            Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            Product product = await _context.Products.Include(p=>p.ProductTags).Include(p=>p.ProductSizes).Include(p=>p.ProductColors).FirstOrDefaultAsync(p => p.Id == id);
             if (product is null) return NotFound();
 
             UpdateProductVM productVM = new UpdateProductVM
@@ -175,10 +175,15 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 Name=product.Name,
                 SKU = product.SKU,
                 Price = product.Price,
-                CategoryId=product.CategoryId,
                 Description = product.Description,
-                Categories=await _context.Categories.ToListAsync(),
-
+                CategoryId =product.CategoryId,
+                Categories = await GetCategoriesAsync(),
+                TagIds = product.ProductTags.Select(t => t.TagId).ToList(),
+                Tags = await GetTagsAsync(),
+                ColorIds =product.ProductColors.Select(t => t.ColorId).ToList(),
+                Colors = await GetColorsAsync(),
+                SizeIds =product.ProductSizes.Select(t => t.SizeId).ToList(),
+                Sizes = await GetSizesAsync(),
             };
 
             return View(productVM);
@@ -193,6 +198,9 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             if (!ModelState.IsValid)
             {
                 productVM.Categories=await _context.Categories.ToListAsync();
+                productVM.Tags=await GetTagsAsync();
+                productVM.Colors=await GetColorsAsync();
+                productVM.Sizes=await GetSizesAsync();
                 return View();
             }
 
@@ -203,14 +211,51 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             if(!result)
             {
                 productVM.Categories = await GetCategoriesAsync();
+                productVM.Tags=await GetTagsAsync();
+                productVM.Colors = await GetColorsAsync();
+                productVM.Sizes = await GetSizesAsync();
                 return View();
             }
-            existed.Name = productVM.Name;
-            existed.Description= productVM.Description;
-            existed.SKU= productVM.SKU;
-            existed.Price = (double)productVM.Price;
-            existed.CategoryId = productVM.CategoryId;
 
+            foreach(ProductTag proTag in existed.ProductTags)
+            {
+                if (!productVM.TagIds.Exists(tId=>tId==proTag.TagId))
+                {
+                    _context.ProductTags.Remove(proTag);
+                }
+            }
+
+            List<int> newTagIds = new List<int>();
+            foreach(int tagId in productVM.TagIds)
+            {
+                if (!existed.ProductTags.Any(pt => pt.TagId==tagId))
+                {
+                    existed.ProductTags.Add(new ProductTag
+                    {
+                        TagId=tagId,
+                    });
+                        
+                }
+            }
+
+
+            Product product = new Product
+            {
+                Name = productVM.Name,
+                Description=productVM.Description,
+                SKU=productVM.SKU,
+                Price=productVM.Price,
+                CategoryId = (int)productVM.CategoryId,
+                ProductTags = productVM.TagIds.Select(tagId=> new ProductTag { TagId=tagId}).ToList(),
+
+            };
+
+            //existed.Name = productVM.Name;
+            //existed.Description= productVM.Description;
+            //existed.SKU= productVM.SKU;
+            //existed.Price = (double)productVM.Price;
+            //existed.CategoryId = productVM.CategoryId;
+            //existed.ProductTags = productVM.Tags.Select(t=>t.Id==).ToList();
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
