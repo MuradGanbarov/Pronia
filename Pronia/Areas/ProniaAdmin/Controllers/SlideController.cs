@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ProniaAdmin.Models;
+using Pronia.Areas.ProniaAdmin.Models;
+using Pronia.Areas.ProniaAdmin.Models;
 using Pronia.Areas.ProniaAdmin.Models.Utilities.Enums;
-using Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions;
 using Pronia.Areas.ViewModels.Slide;
 using Pronia.DAL;
 using Pronia.Models;

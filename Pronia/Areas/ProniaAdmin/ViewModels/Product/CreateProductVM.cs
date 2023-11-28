@@ -14,8 +14,11 @@ namespace Pronia.Areas.ProniaAdmin.ViewModels
         public string Description { get; set; }
         [Required]
         public string SKU { get; set; }
-        [Range(1, 300, ErrorMessage = "Chooce a category!")]
+        public IFormFile MainPhoto { get; set; }
+        public IFormFile HoverPhoto { get; set; }
+        public List<IFormFile>? Photos { get; set; }
 
+        [Range(1, 300, ErrorMessage = "Chooce a category!")]
         public int CategoryID { get; set; }
         public List<Category>? Categories { get; set; }
         public List<Tag>? Tags { get; set; }
@@ -24,6 +27,7 @@ namespace Pronia.Areas.ProniaAdmin.ViewModels
         public List<int>? ColorIds { get; set; }
         public List<Size>? Sizes { get; set; }
         public List<int>? SizeIds { get; set; }
+       
     }
 
 }

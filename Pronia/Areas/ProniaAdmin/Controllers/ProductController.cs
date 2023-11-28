@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.ProniaAdmin.Models;
+using Pronia.Areas.ProniaAdmin.Models.Utilities.Enums;
 using Pronia.Areas.ProniaAdmin.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
@@ -12,10 +14,11 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
     public class ProductController : Controller
     {
         private readonly AppDbContext _context;
-
-        public ProductController(AppDbContext context)
+        private readonly IWebHostEnvironment _env;
+        public ProductController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env= env;
         }
         public async Task<IActionResult> Index()
         {
@@ -50,6 +53,58 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 productVM.Sizes = await GetSizesAsync();
                 return View(productVM);
             }
+
+            if (!productVM.MainPhoto.IsValidType(FileType.Image))
+            { 
+                productVM.Categories=await GetCategoriesAsync();
+                productVM.Tags=await GetTagsAsync();
+                productVM.Colors = await GetColorsAsync();
+                productVM.Sizes = await GetSizesAsync();
+                ModelState.AddModelError("MainPhoto","File tipi uygun deyil:");
+                return View();
+            }
+            if (!productVM.MainPhoto.IsValidSize(600))
+            {
+                productVM.Categories=await GetCategoriesAsync();
+                productVM.Tags=await GetTagsAsync();
+                productVM.Colors = await GetColorsAsync();
+                productVM.Sizes = await GetSizesAsync();
+                ModelState.AddModelError("Main Photo", "File olcusu uygun deyil:600");
+                return View();
+            }
+
+            if (!productVM.HoverPhoto.IsValidType(FileType.Image))
+            {
+                productVM.Categories = await GetCategoriesAsync();
+                productVM.Tags=await GetTagsAsync();
+                productVM.Colors=await GetColorsAsync();
+                productVM.Sizes=await GetSizesAsync();
+                ModelState.AddModelError("Hover Photo", "File tipi uygun deyil:");
+                return View();
+            }
+            if (!productVM.HoverPhoto.IsValidSize(600))
+            {
+                productVM.Categories=await GetCategoriesAsync();
+                productVM.Tags=await GetTagsAsync();
+                productVM.Colors=await GetColorsAsync();
+                productVM.Sizes=await GetSizesAsync();
+                ModelState.AddModelError("Hover Photo", "File olcusu uygun deyil:600");
+                return View();
+            }
+
+
+            ProductImage image = new ProductImage
+            {
+                Alternative = productVM.Name,
+                IsPrimary =true,
+                URL = await productVM.MainPhoto.CreateAsync(_env.WebRootPath, "assets", "images", "product")
+            };
+            ProductImage HoverImage = new ProductImage
+            {
+                Alternative = productVM.Name,
+                IsPrimary = false,
+                URL = await productVM.HoverPhoto.CreateAsync(_env.WebRootPath,"assets","images", "product" )
+            };
 
             bool result = await _context.Products.AnyAsync(p => p.CategoryId == productVM.CategoryID);
 
@@ -111,7 +166,8 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 Description = productVM.Description,
                 ProductTags = new List<ProductTag>(),
                 ProductColors = new List<ProductColor>(),
-                ProductSizes = new List<ProductSize>()
+                ProductSizes = new List<ProductSize>(),
+                productImages = new List<ProductImage>()
             };
 
 
@@ -144,6 +200,30 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 };
 
                 product.ProductSizes.Add(productSize);
+            }
+
+            TempData["Message"] = "";
+
+            foreach(IFormFile photo in productVM.Photos)
+            {
+                if (!photo.IsValidType(FileType.Image))
+                {
+                    TempData["Message"] += $"\n{photo.FileName} file tipi uygun deyil";
+                    continue;
+                }
+                if (!photo.IsValidSize(600))
+                {
+                    TempData["Message"] += $"\n{photo.FileName} File olchusu uygun deyil:600";
+                    continue;
+                }
+
+                product.productImages.Add(new ProductImage
+                {
+                    Alternative = productVM.Name,
+                    IsPrimary = null,
+                    URL= await photo.CreateAsync(_env.WebRootPath,"assets","images","product")
+                });
+
             }
 
             await _context.Products.AddAsync(product);

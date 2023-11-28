@@ -2,7 +2,7 @@
 using Pronia.Areas.ProniaAdmin.Models.Utilities.Enums;
 using Pronia.Models;
 
-namespace Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions
+namespace Pronia.Areas.ProniaAdmin.Models
 {
     public static class FileValidator
     {
