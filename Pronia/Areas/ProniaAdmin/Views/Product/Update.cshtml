@@ -1,18 +1,62 @@
 ﻿@using Pronia.Areas.ProniaAdmin.ViewModels;
 
+@{
+    ProductImage main = Model.ProductImages.FirstOrDefault(pi => pi.IsPrimary == true);
+    ProductImage hover = Model.ProductImages.FirstOrDefault(pi => pi.IsPrimary == false);
+
+}
+
 @model UpdateProductVM
+
+
+
 <div class="row">
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Update Product</h4>
                 <form class="forms-sample" method="post" enctype="multipart/form-data">
-                    
                     <div class="form-group">
                         <label asp-for="Name">Name</label>
                         <input asp-for="Name" class="form-control" placeholder="Name">
                         <span class="text-danger" asp-validation-for="Name"></span>
                     </div>
+                    <div class="form-group">
+                        <img style="width:150px;height:150px" src="~/assets/images/product/@main.URL" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MainPhoto">Main Image</label>
+                        <input asp-for="MainPhoto" class="form-control" accept="image/*" />
+                        <span class="text-danger" asp-validation-for="MainPhoto"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <img style="width:150px;height:150px" src="~/assets/images/product/@hover.URL" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HoverPhoto">Hover Image</label>
+                        <input asp-for="HoverPhoto" class="form-control" accept="image/*" />
+                        <span class="text-danger" asp-validation-for="HoverPhoto"></span>
+                    </div>
+                    <div class="form-group d-flex">
+
+                        @foreach (ProductImage image in Model.ProductImages.Where(pi => pi.IsPrimary == null))
+                        {
+                            <div class="position-relative">
+                                <img style="width:150px;height:150px" src="~/assets/images/product/@image.URL" />
+                                <button style="right:5px;top:5px" class="cus-button btn btn-danger position-absolute">X</button>
+                                <input asp-for="ImageIds" type="hidden" value="@image.Id">
+                            </div>
+                        }
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Photos">Additional images</label>
+                        <input asp-for="Photos" class="form-control" accept="image/*" />
+                        <span class="text-danger" asp-validation-for="Photos"></span>
+                    </div>
+
+
                     <div class="form-group">
                         <label asp-for="Price">Price</label>
                         <input asp-for="Price" class="form-control" placeholder="Price">
@@ -30,7 +74,6 @@
                     </div>
                     <div class="form-control">
                         <select asp-for="CategoryId" asp-items="new SelectList(Model.Categories,nameof(Category.Id),nameof(Category.Name))">
-                            
                         </select>
                         <span class="text-danger" asp-validation-for="CategoryId"></span>
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -62,4 +105,16 @@
         </div>
     </div>
 </div>
-<
+
+
+@section DeleteImages{
+    <script>
+        var btns = document.querySelectorAll(".cus-button")
+
+        for (let i = 0; i <= btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                btns[i].parentElement.remove()
+            })
+        }
+    </script>
+}
