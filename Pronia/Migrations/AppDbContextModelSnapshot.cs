@@ -36,7 +36,7 @@ namespace Pronia.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.Color", b =>
@@ -53,7 +53,7 @@ namespace Pronia.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.Product", b =>
@@ -86,7 +86,7 @@ namespace Pronia.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.ProductColor", b =>
@@ -109,7 +109,7 @@ namespace Pronia.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductColors");
+                    b.ToTable("ProductColors", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.ProductImage", b =>
@@ -138,7 +138,7 @@ namespace Pronia.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.ProductSize", b =>
@@ -161,7 +161,7 @@ namespace Pronia.Migrations
 
                     b.HasIndex("SizeId");
 
-                    b.ToTable("ProductSizes");
+                    b.ToTable("ProductSizes", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.ProductTag", b =>
@@ -184,7 +184,7 @@ namespace Pronia.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("ProductTags");
+                    b.ToTable("ProductTags", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.Size", b =>
@@ -201,7 +201,7 @@ namespace Pronia.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sizes");
+                    b.ToTable("Sizes", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.Slide", b =>
@@ -233,7 +233,7 @@ namespace Pronia.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Slides");
+                    b.ToTable("Slides", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.Tag", b =>
@@ -250,7 +250,7 @@ namespace Pronia.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Pronia.Models.Product", b =>

@@ -1,4 +1,6 @@
-﻿namespace Pronia.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Pronia.Models
 {
     public class Product
     {
@@ -13,6 +15,5 @@
         public List<ProductTag>? ProductTags { get; set; }
         public List<ProductColor>? ProductColors { get; set; }
         public List<ProductSize>? ProductSizes { get; set; }
-        
     }
 }
