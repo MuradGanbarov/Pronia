@@ -15,7 +15,7 @@ namespace Pronia.ViewComponents
         }
 
 
-        public async Task<IViewComponentResult> InvokeResultAsync(int key=1)
+        public async Task<IViewComponentResult> InvokeAsync(int key=1)
         {
 
             List<Product> products;
@@ -24,11 +24,9 @@ namespace Pronia.ViewComponents
             {
                 case 1:
                     products = await _context.Products.OrderBy(p => p.Name).Take(8).Include(p => p.productImages.Where(pi => pi.IsPrimary != null)).ToListAsync();
-
                     break;
                 case 2:
                     products = await _context.Products.OrderByDescending(p => p.Price).Take(8).Include(p => p.productImages.Where(pi => pi.IsPrimary != null)).ToListAsync();
-
                     break;
                 case 3:
                     products = await _context.Products.OrderByDescending(p => p.Id).Take(8).Include(p=> p.productImages.Where(pi => pi.IsPrimary != null)).ToListAsync();
@@ -37,7 +35,6 @@ namespace Pronia.ViewComponents
                 default:
                     products = await _context.Products.Take(8).Include(p => p.productImages.Where(pi => pi.IsPrimary != null)).ToListAsync();
                     break;
-
             }
 
             return View(products);
