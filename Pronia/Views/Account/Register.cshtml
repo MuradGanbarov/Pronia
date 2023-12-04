@@ -61,7 +61,7 @@
                                     <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    @Html.DropDownList("StudentGender",
+                                    @Html.DropDownList("Gender",
                                     new List<SelectListItem>() {
                                     new SelectListItem(){ Text="Male",Value=Pronia.Utilites.Enums.GenderType.Male.ToString()},
                                     new SelectListItem(){ Text="Female",Value=Pronia.Utilites.Enums.GenderType.Female.ToString()}
