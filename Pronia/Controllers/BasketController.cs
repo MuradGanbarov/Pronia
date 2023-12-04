@@ -94,6 +94,11 @@ namespace Pronia.Controllers
 
         }
 
+        public async Task<IActionResult> GetBasketItems()
+        {
+            return Content(Request.Cookies["Basket"]);
+        }
 
     }
+
 }

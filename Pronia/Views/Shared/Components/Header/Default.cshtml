@@ -1,4 +1,4 @@
-﻿@model Dictionary<string, string>
+﻿@model HeaderVM
 
 <!-- Begin Main Header Area -->
 <header class="main-header-area">
@@ -57,11 +57,11 @@
                     <div class="header-middle-wrap position-relative">
                         <div class="header-contact d-none d-lg-flex">
                             
-                            <a href="@Model["PhoneIcon"]">+00 123 456 789</a>
+                            <a href="@Model.Settings["PhoneIcon"]">+00 123 456 789</a>
                         </div>
 
                         <a href="index.html" class="header-logo">
-                            <img src="~/assets/images/logo/@Model["Logo"]" alt="Header Logo" />
+                            <img src="~/assets/images/logo/@Model.Settings["Logo"]" alt="Header Logo" />
                         </a>
 
                         <div class="header-right">
@@ -71,7 +71,7 @@
                                        class="search-btn bt"
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal">
-                                       @Html.Raw(Model["SearchIcon"])
+                                       @Html.Raw(Model.Settings["SearchIcon"])
                                     </a>
                                 </li>
                                 <li class="dropdown d-none d-lg-block">
@@ -81,7 +81,7 @@
                                             data-bs-toggle="dropdown"
                                             aria-label="setting"
                                             aria-expanded="false">
-                                            @Html.Raw(Model["UsersIcon"])
+                                            @Html.Raw(Model.Settings["UsersIcon"])
                                     </button>
                                     <ul class="dropdown-menu"
                                         aria-labelledby="settingButton">
@@ -90,7 +90,7 @@
 
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="~/login-register.html">Login | Register</a>
+                                            <a class="dropdown-item" asp-action="register" asp-controller="account">Login | Register</a>
 
                                         </li>
                                     </ul>
@@ -259,7 +259,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-6">
                         <a href="index.html" class="header-logo">
-                            <img src="~/assets/images/logo/@Model["Logo"]" alt="Header Logo" />
+                            <img src="~/assets/images/logo/@Model.Settings["Logo"]" alt="Header Logo" />
                         </a>
                     </div>
                     <div class="col-lg-6 d-none d-lg-block">
@@ -398,7 +398,7 @@
                                        class="search-btn bt"
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal">
-                                        @Html.Raw(Model["SearchIcon"])
+                                        @Html.Raw(Model.Settings["SearchIcon"])
                                     </a>
                                 </li>
                                 <li class="dropdown d-none d-lg-block">
@@ -408,7 +408,7 @@
                                             data-bs-toggle="dropdown"
                                             aria-label="setting"
                                             aria-expanded="false">
-                                        @Html.Raw(Model["UsersIcon"])
+                                        @Html.Raw(Model.Settings["UsersIcon"])
                                     </button>
                                     <ul class="dropdown-menu"
                                         aria-labelledby="stickysettingButton">
@@ -453,8 +453,8 @@
                     <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
                 </div>
                 <div class="header-contact offcanvas-contact">
-                    @Html.Raw(Model["PhoneIcon"])
-                    <a href="@Model["Phone"]">@Model["Phone"]</a>
+                    @Html.Raw(Model.Settings["PhoneIcon"])
+                    <a href="@Model.Settings["Phone"]">@Model.Settings["Phone"]</a>
                 </div>
                 <div class="offcanvas-user-info">
                     <ul class="dropdown-wrap">
@@ -793,6 +793,7 @@
                     </a>
                 </div>
                 <ul class="minicart-list">
+                    @foreach(BasketItemVM item in Model.BasketItems){
                     <li class="minicart-product">
                         <a class="product-item_remove" href="#">
                             <i class="pe-7s-close"
@@ -803,70 +804,26 @@
                                data-tippy-arrow="true"
                                data-tippy-theme="sharpborder"></i>
                         </a>
-                        <a href="~/single-product-variable.html"
+                        <a asp-action="detail" asp-controller="product" asp-route-id="@item.Id">
                            class="product-item_img">
                             <img class="img-full"
-                                 src="~/assets/images/product/small-size/2-1-70x78.png"
+                                 src="~/assets/images/website-images/@item.Image"
                                  alt="Product Image" />
                         </a>
                         <div class="product-item_content">
                             <a class="product-item_title"
-                               href="~/single-product-variable.html">American Marigold</a>
+                               asp-action="detail" asp-controller="product">@item.</a>
 
-                            <span class="product-item_quantity">1 x $23.45</span>
+                            <span class="product-item_quantity">@item.Count x $@item.Price</span>
                         </div>
                     </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="#">
-                            <i class="pe-7s-close"
-                               data-tippy="Remove"
-                               data-tippy-inertia="true"
-                               data-tippy-animation="shift-away"
-                               data-tippy-delay="50"
-                               data-tippy-arrow="true"
-                               data-tippy-theme="sharpborder"></i>
-                        </a>
-                        <a href="~/single-product-variable.html"
-                           class="product-item_img">
-                            <img class="img-full"
-                                 src="~/assets/images/product/small-size/2-2-70x78.png"
-                                 alt="Product Image" />
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title"
-                               href="~/single-product-variable.html">Black Eyed Susan</a>
 
-                            <span class="product-item_quantity">1 x $25.45</span>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="#">
-                            <i class="pe-7s-close"
-                               data-tippy="Remove"
-                               data-tippy-inertia="true"
-                               data-tippy-animation="shift-away"
-                               data-tippy-delay="50"
-                               data-tippy-arrow="true"
-                               data-tippy-theme="sharpborder"></i>
-                        </a>
-                        <a href="~/single-product-variable.html"
-                           class="product-item_img">
-                            <img class="img-full"
-                                 src="~/assets/images/product/small-size/2-3-70x78.png"
-                                 alt="Product Image" />
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title"
-                               href="~/single-product-variable.html">Bleeding Heart</a>
-
-                            <span class="product-item_quantity">1 x $30.45</span>
-                        </div>
-                    </li>
+                    }
                 </ul>
             </div>
             <div class="minicart-item_total">
                 <span>Subtotal</span>
-                <span class="ammount">$79.35</span>
+                <span class="ammount">$</span>
             </div>
             <div class="group-btn_wrap d-grid gap-2">
                 <a href="cart.html" class="btn btn-dark">View Cart</a>

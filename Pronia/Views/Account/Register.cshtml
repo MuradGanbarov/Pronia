@@ -1,0 +1,82 @@
+﻿@using Pronia.ViewModel;
+@model RegisterVM
+
+<main class="main-content">
+    <div class="breadcrumb-area breadcrumb-height"
+         data-bg-image="assets/images/breadcrumb/bg/1-1-1919x388.jpg">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h2 class="breadcrumb-heading">Login & Register Page</h2>
+                        <ul>
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>Register</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login-register-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-12 pt-6 pt-lg-0">
+                    <form method="post">
+                        <div class="login-form">
+                            <h4 class="login-title">Register</h4>
+
+                            <div class="row">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="col-md-6 col-12">
+                                    <label asp-for="Name">Name</label>
+                                    <input asp-for="Name" placeholder="Name" />
+                                    <span class="text-danger" asp-validation-for="Name"></span>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <label asp-for="Surname">Surname</label>
+                                    <input asp-for="Surname" placeholder="Last Name" />
+                                    <span class="text-danger" asp-validation-for="Surname"></span>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <label asp-for="UserName">Username</label>
+                                    <input asp-for="UserName" placeholder="Last Name" />
+                                    <span class="text-danger" asp-validation-for="UserName"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="Email">Email Address</label>
+                                    <input type="email" asp-for="Email" placeholder="Email Address" />
+                                    <span class="text-danger" asp-validation-for="Email"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Password">Password</label>
+                                    <input asp-for="Password" placeholder="Password" />
+                                    <span class="text-danger" asp-validation-for="Password"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="PasswordConfirm">Confirm Password</label>
+                                    <input asp-for="PasswordConfirm" placeholder="Confirm Password" />
+                                    <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DropDownList("StudentGender",
+                                    new List<SelectListItem>() {
+                                    new SelectListItem(){ Text="Male",Value=Pronia.Utilites.Enums.GenderType.Male.ToString()},
+                                    new SelectListItem(){ Text="Female",Value=Pronia.Utilites.Enums.GenderType.Female.ToString()}
+                                    }, new { @class = "input-medium", size="6", multiple="multiple" } )
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-custom-size lg-size btn-pronia-primary">
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
