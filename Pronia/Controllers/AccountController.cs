@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pronia.Models;
+using Pronia.Utilites.Enums;
 using Pronia.ViewModel;
 
 namespace Pronia.Controllers
@@ -9,11 +10,13 @@ namespace Pronia.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
         public IActionResult Register() //index sehfesinin yerine regist olucey, ve View qaytarmalidi
         {
@@ -70,7 +73,7 @@ namespace Pronia.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Login(LoginVM loginVM) // Bu hisse username yada email'ile axtarir
+        public async Task<IActionResult> Login(LoginVM loginVM, string? returnURL) // Bu hisse username yada email'ile axtarir
         {
             if (!ModelState.IsValid) return View();
 
@@ -84,25 +87,47 @@ namespace Pronia.Controllers
                     ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
                     return View();
                 }
+
             }
             var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.IsRemembered, true); //Bu hisse password'u yoxluyur
-            if(result.IsLockedOut)
+
+
+
+
+            if (result.IsLockedOut)
             {
                 ModelState.AddModelError(String.Empty, "Please try again in 3 minutes");
                 return View();
             }
-            
-            
+
+
+
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(String.Empty,"Incorrect username,password or email");
+                ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
                 return View();
-                
+
+            }
+            if (returnURL is null)
+            {
+                return RedirectToAction("Home", "Index");
+            }
+            return Redirect(returnURL);
+
+
+        }
+
+        public async Task<IActionResult> CreateRole() //Db'ye role'lari doldurmaq metodu
+        {
+            foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
+            {
+                await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = role.ToString(),
+                });
             }
 
-
             return RedirectToAction("Index", "Home");
-
         }
 
 
