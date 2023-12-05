@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic.FileIO;
 using Pronia.Models;
 using Pronia.Utilites.Enums;
 using Pronia.ViewModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pronia.Controllers
 {
@@ -27,14 +29,14 @@ namespace Pronia.Controllers
 
         public async Task<IActionResult> Register(RegisterVM userVM)
         {
-            if(ModelState.IsValid) return View();
+            if(!ModelState.IsValid) return View();
             
             AppUser user = new AppUser()
             {
-                Name = userVM.Name,
-                Surname = userVM.Surname,
+                Name = userVM.Name.Trim().ToUpper(),
+                Surname = userVM.Surname.Trim().ToUpper(),
                 UserName = userVM.UserName,
-                Email = userVM.Email,
+                Email = userVM.Email.Trim().ToUpper(),
                 Gender = userVM.Gender
             };
 
@@ -55,26 +57,16 @@ namespace Pronia.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        public static bool SelectGener(GenderType type)
-        {
-            if(type == GenderType.Male)
-            {
-                return true;
-            }
-            if (type == GenderType.Female) return true;
-
-            else
-            {
-                return false;
-            }
-            
-        }
+       
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index","Home");
         }
+
+
+        
 
 
     }

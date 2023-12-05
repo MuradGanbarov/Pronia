@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pronia.Utilites.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pronia.ViewModel
 {
@@ -17,9 +18,7 @@ namespace Pronia.ViewModel
         [MaxLength(25)]
         public string UserName { get; set; }
         [Required]
-        [MinLength(6)]
-        [MaxLength(256)]
-        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Incorrect address")]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
@@ -28,7 +27,6 @@ namespace Pronia.ViewModel
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         public string PasswordConfirm { get; set; }
-        [Required]
-        public string? Gender { get; set; }
+        public GenderType Gender { get; set; }
     }
 }

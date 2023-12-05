@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <label asp-for="UserName">Username</label>
-                                    <input asp-for="UserName" placeholder="Last Name" />
+                                    <input asp-for="UserName" placeholder="UserName" />
                                     <span class="text-danger" asp-validation-for="UserName"></span>
                                 </div>
                                 <div class="col-md-12">
@@ -61,11 +61,13 @@
                                     <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    @Html.DropDownList("Gender",
-                                    new List<SelectListItem>() {
-                                    new SelectListItem(){ Text="Male",Value=Pronia.Utilites.Enums.GenderType.Male.ToString()},
-                                    new SelectListItem(){ Text="Female",Value=Pronia.Utilites.Enums.GenderType.Female.ToString()}
-                                    }, new { @class = "input-medium", size="6", multiple="multiple" } )
+                                    <div class="form-control">
+                                        @Html.DropDownList("Gender",
+                                        new List<SelectListItem>() {
+                                        new SelectListItem(){ Text="Male",Value=Pronia.Utilites.Enums.GenderType.Male.ToString()},
+                                        new SelectListItem(){ Text="Female",Value=Pronia.Utilites.Enums.GenderType.Female.ToString()}
+                                        }, new { @class = "input-medium", size="6", multiple="multiple" } )                                       
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-custom-size lg-size btn-pronia-primary">

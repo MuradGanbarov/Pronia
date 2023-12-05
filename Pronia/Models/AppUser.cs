@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Pronia.Utilites.Enums;
 
 namespace Pronia.Models
 {
@@ -7,7 +8,7 @@ namespace Pronia.Models
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string? Gender { get; set; }
+        public GenderType Gender { get; set; }
         //Gender saxlayarsan
     }
 }
