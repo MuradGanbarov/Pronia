@@ -8,7 +8,7 @@ namespace Pronia.Models
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public GenderType Gender { get; set; }
+        public string Gender { get; set; }
         //Gender saxlayarsan
     }
 }

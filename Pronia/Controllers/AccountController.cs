@@ -37,7 +37,7 @@ namespace Pronia.Controllers
                 Surname = userVM.Surname.Trim().ToUpper(),
                 UserName = userVM.UserName,
                 Email = userVM.Email.Trim().ToUpper(),
-                Gender = userVM.Gender
+                Gender = userVM.Gender.ToString()
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, userVM.Password);
