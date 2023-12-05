@@ -7,10 +7,13 @@ using Pronia.Areas.ProniaAdmin.Models.Utilities.Enums;
 using Pronia.Areas.ViewModels.Slide;
 using Pronia.DAL;
 using Pronia.Models;
+using Pronia.Utilites.Enums;
+using static Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions.AuthorizeRoles;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
     [Area("ProniaAdmin")]
+    [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
     public class SlideController : Controller
     {
         
@@ -26,6 +29,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             List<Slide> slides = await _context.Slides.ToListAsync();
             return View(slides);
         }
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public IActionResult Create()
         {
             return View();
@@ -78,7 +82,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [AuthorizeRolesAttribute(UserRole.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
@@ -90,6 +94,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public async Task<IActionResult> Update(int id)
         {
             if(id<=0) return BadRequest();
@@ -140,9 +145,9 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             
         }
-        
 
 
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public async Task<IActionResult> Details(int id)
         {
             if (id <= 0) return BadRequest();

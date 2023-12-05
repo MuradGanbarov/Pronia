@@ -4,11 +4,13 @@ using Pronia.Areas.ProniaAdmin.ViewModels;
 using Pronia.Areas.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
-
+using Pronia.Utilites.Enums;
+using static Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions.AuthorizeRoles;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
     [Area("ProniaAdmin")]
+    [AuthorizeRolesAttribute(UserRole.Admin,UserRole.Moderator)]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,6 +23,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             List<Category>? categories = await _context.Categories.Include(c => c.Products).ToListAsync();
             return View(categories);
         }
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public IActionResult Create()
         {
             return View();
@@ -54,7 +57,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
@@ -89,7 +92,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));     
         }
-
+        [AuthorizeRolesAttribute(UserRole.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             if(id <= 0) return BadRequest();
@@ -104,7 +107,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public async Task<IActionResult> Details(int id)
         {
             Category category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);

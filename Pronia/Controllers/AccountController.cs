@@ -117,18 +117,62 @@ namespace Pronia.Controllers
 
         }
 
-        public async Task<IActionResult> CreateRole() //Db'ye role'lari doldurmaq metodu
+        public async Task<IActionResult> Admin(LoginVM adminlogin,string? returnURL)
         {
-            foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
+            if (!ModelState.IsValid) return View();
+            AppUser user = await _userManager.FindByNameAsync(adminlogin.UsernameOrEmail);
+            if (user is null)
             {
-                await _roleManager.CreateAsync(new IdentityRole
+                user = await _userManager.FindByEmailAsync(adminlogin.UsernameOrEmail);
+                if (user is null)
                 {
-                    Name = role.ToString(),
-                });
+                    ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
+                    return View();
+                }
+
+            }
+            var result = await _signInManager.PasswordSignInAsync(user, adminlogin.Password, adminlogin.IsRemembered, true); //Bu hisse password'u yoxluyur
+
+
+
+
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(String.Empty, "Please try again in 3 minutes");
+                return View();
             }
 
-            return RedirectToAction("Index", "Home");
+            if (result.Succeeded) return RedirectToAction("Home", "ProniaAdmin");
+
+            if(!result.Succeeded)
+            {
+                ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
+                return View();
+
+            }
+            
+            if (returnURL is null)
+            {
+                return RedirectToAction("Home", "Index");
+            }
+            return Redirect(returnURL);
+
+
         }
+
+        /*public async Task<IActionResult> CreateRole()*/ //Db'ye role'lari doldurmaq metodu
+        //{
+        //    foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
+        //    {
+        //        if(!(await _roleManager.RoleExistsAsync(role.ToString())))
+        //        await _roleManager.CreateAsync(new IdentityRole
+        //        {
+        //            Name = role.ToString(),
+        //        });
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
 
 
 

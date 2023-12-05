@@ -3,12 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Pronia.Areas.ProniaAdmin.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
+using Pronia.Utilites.Enums;
 using System.Drawing;
+using static Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions.AuthorizeRoles;
 using Size = Pronia.Models.Size;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
     [Area("ProniaAdmin")]
+    [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
     public class SizeController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,6 +24,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             List<Size> sizes = await _context.Sizes.Include(s=>s.ProductSizes).ToListAsync();
             return View(sizes);
         }
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public IActionResult Create()
         {
             return View();
@@ -54,7 +58,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public async Task<IActionResult> Update(int id)
         {
             if (id <= 0) return BadRequest();
@@ -90,7 +94,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
 
         }
-
+        [AuthorizeRolesAttribute(UserRole.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest();
@@ -105,7 +109,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public async Task<IActionResult> Details(int id)
         {
 

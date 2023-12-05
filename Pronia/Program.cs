@@ -27,12 +27,13 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 var app = builder.Build();
 
-
+app.UseRouting();
 app.UseAuthentication(); //Bu ardiciliqla olmalidi, yoxsa cookies'de problem yarana biler
 app.UseAuthorization();
-
 app.UseStaticFiles();
-app.UseRouting();
+
+
+
 
 app.MapControllerRoute(
     "Category",
