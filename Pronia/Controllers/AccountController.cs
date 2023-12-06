@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Humanizer.Localisation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.IdentityModel.Tokens;
+using NuGet.Versioning;
+using Pronia.DAL;
 using Pronia.Models;
 using Pronia.Utilites.Enums;
 using Pronia.ViewModel;
+using System.Data.Common;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Pronia.Controllers
 {
@@ -11,12 +19,14 @@ namespace Pronia.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly AppDbContext _context;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
         public IActionResult Register() //index sehfesinin yerine regist olucey, ve View qaytarmalidi
         {
@@ -76,31 +86,36 @@ namespace Pronia.Controllers
         public async Task<IActionResult> Login(LoginVM loginVM, string? returnURL) // Bu hisse username yada email'ile axtarir
         {
             if (!ModelState.IsValid) return View();
+            bool check = _context.Users.FirstOrDefault(u => u.UserName == loginVM.UsernameOrEmail || u.Email == loginVM.UsernameOrEmail) == null;
 
-
+            if (check)
+            {
+                ModelState.AddModelError(String.Empty, "This account is not exist. Please register.");
+                return View();
+            }
+            
             AppUser user = await _userManager.FindByNameAsync(loginVM.UsernameOrEmail);
+            
             if (user is null)
             {
                 user = await _userManager.FindByEmailAsync(loginVM.UsernameOrEmail);
+
                 if (user is null)
                 {
                     ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
                     return View();
                 }
-
             }
+
             var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.IsRemembered, true); //Bu hisse password'u yoxluyur
 
-
-
+            
 
             if (result.IsLockedOut)
             {
                 ModelState.AddModelError(String.Empty, "Please try again in 3 minutes");
                 return View();
             }
-
-
 
             if (!result.Succeeded)
             {
@@ -117,9 +132,18 @@ namespace Pronia.Controllers
 
         }
 
-        public async Task<IActionResult> Admin(LoginVM adminlogin,string? returnURL)
+        public async Task<IActionResult> AdminLogin(LoginVM adminlogin, string? returnURL)
         {
             if (!ModelState.IsValid) return View();
+
+            bool check = _context.Users.FirstOrDefault(u => u.UserName == adminlogin.UsernameOrEmail || u.Email == adminlogin.UsernameOrEmail) == null;
+
+            if (check)
+            {
+                ModelState.AddModelError(String.Empty, "This account is not exist. Please register.");
+                return View();
+            }
+
             AppUser user = await _userManager.FindByNameAsync(adminlogin.UsernameOrEmail);
             if (user is null)
             {
@@ -133,9 +157,6 @@ namespace Pronia.Controllers
             }
             var result = await _signInManager.PasswordSignInAsync(user, adminlogin.Password, adminlogin.IsRemembered, true); //Bu hisse password'u yoxluyur
 
-
-
-
             if (result.IsLockedOut)
             {
                 ModelState.AddModelError(String.Empty, "Please try again in 3 minutes");
@@ -144,13 +165,13 @@ namespace Pronia.Controllers
 
             if (result.Succeeded) return RedirectToAction("Home", "ProniaAdmin");
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
                 return View();
 
             }
-            
+
             if (returnURL is null)
             {
                 return RedirectToAction("Home", "Index");
@@ -160,16 +181,42 @@ namespace Pronia.Controllers
 
         }
 
-        /*public async Task<IActionResult> CreateRole()*/ //Db'ye role'lari doldurmaq metodu
+        //public void Check(string UsernameOrEmail)
         //{
-        //    foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
+        //    bool check = _context.Users.FirstOrDefault(u => u.UserName == UsernameOrEmail || u.Email == UsernameOrEmail) == null;
+
+        //    if (check)
         //    {
-        //        if(!(await _roleManager.RoleExistsAsync(role.ToString())))
-        //        await _roleManager.CreateAsync(new IdentityRole
-        //        {
-        //            Name = role.ToString(),
-        //        });
+        //        ModelState.AddModelError(String.Empty, "This account is not exist. Please register.");
         //    }
+            
+        //}
+
+        //public void CheckAdmin(string UsernameOrEmail)
+        //{
+        //    bool check = _context.Users.FirstOrDefault(u => u.UserName == UsernameOrEmail || u.Email == UsernameOrEmail) == null;
+
+        //    if (check)
+        //    {
+        //        ModelState.AddModelError(String.Empty, "This account is not exist");
+        //    }
+
+        //}
+
+
+
+
+
+        /*public async Task<IActionResult> CreateRole()*/ //Db'ye role'lari doldurmaq metodu
+                                                          //{
+                                                          //    foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
+                                                          //    {
+                                                          //        if(!(await _roleManager.RoleExistsAsync(role.ToString())))
+                                                          //        await _roleManager.CreateAsync(new IdentityRole
+                                                          //        {
+                                                          //            Name = role.ToString(),
+                                                          //        });
+                                                          //    }
 
         //    return RedirectToAction("Index", "Home");
         //}
