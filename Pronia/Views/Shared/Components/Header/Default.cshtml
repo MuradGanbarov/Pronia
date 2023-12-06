@@ -512,14 +512,28 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end"
                                 aria-labelledby="settingButtonTwo">
-                                <li>
-                                    <a class="dropdown-item" href="~/my-account.html">My account</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li>
+                                        <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-action="login" asp-controller="account" asp-route-returnurl="@Context.Request.Path.Value">Login</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-action="register" asp-controller="account">Register</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
+                                    </li>
 
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="~/login-register.html">Login | Register</a>
-
-                                </li>
+                                }
                             </ul>
                         </li>
                         <li>
@@ -648,16 +662,28 @@
                                             </span>
                                         </a>
                                         <ul class="sub-menu">
-                                            <li>
-                                                <a href="~/my-account.html">
-                                                    <span class="mm-text">My Account</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="~/login-register.html">
-                                                    <span class="mm-text">Login | Register</span>
-                                                </a>
-                                            </li>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" asp-action="login" asp-controller="account" asp-route-returnurl="@Context.Request.Path.Value">Login</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" asp-action="register" asp-controller="account">Register</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
+                                                </li>
+
+                                            }
                                             <li>
                                                 <a href="cart.html">
                                                     <span class="mm-text">Shopping Cart</span>
