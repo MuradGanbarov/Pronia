@@ -1,5 +1,8 @@
 ﻿@model HeaderVM
 
+@{
+    decimal total = 0;
+}
 <!-- Begin Main Header Area -->
 <header class="main-header-area">
     <div class="header-top bg-pronia-primary d-none d-lg-block">
@@ -56,7 +59,7 @@
                 <div class="col-lg-12">
                     <div class="header-middle-wrap position-relative">
                         <div class="header-contact d-none d-lg-flex">
-                            
+
                             <a href="@Model.Settings["PhoneIcon"]">+00 123 456 789</a>
                         </div>
 
@@ -71,7 +74,7 @@
                                        class="search-btn bt"
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal">
-                                       @Html.Raw(Model.Settings["SearchIcon"])
+                                        @Html.Raw(Model.Settings["SearchIcon"])
                                     </a>
                                 </li>
                                 <li class="dropdown d-none d-lg-block">
@@ -81,7 +84,7 @@
                                             data-bs-toggle="dropdown"
                                             aria-label="setting"
                                             aria-expanded="false">
-                                            @Html.Raw(Model.Settings["UsersIcon"])
+                                        @Html.Raw(Model.Settings["UsersIcon"])
                                     </button>
                                     <ul class="dropdown-menu"
                                         aria-labelledby="settingButton">
@@ -107,7 +110,7 @@
                                             </li>
 
                                         }
-                                        
+
                                     </ul>
                                 </li>
                                 <li class="d-none d-lg-block">
@@ -834,37 +837,37 @@
                     </a>
                 </div>
                 <ul class="minicart-list">
-                    @foreach(BasketItemVM item in Model.BasketItems){
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="#">
-                            <i class="pe-7s-close"
-                               data-tippy="Remove"
-                               data-tippy-inertia="true"
-                               data-tippy-animation="shift-away"
-                               data-tippy-delay="50"
-                               data-tippy-arrow="true"
-                               data-tippy-theme="sharpborder"></i>
-                        </a>
-                        <a asp-action="detail" asp-controller="product" asp-route-id="@item.Id">
-                           class="product-item_img">
-                            <img class="img-full"
-                                 src="~/assets/images/website-images/@item.Image"
-                                 alt="Product Image" />
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title"
-                               asp-action="detail" asp-controller="product">@item.</a>
-
-                            <span class="product-item_quantity">@item.Count x $@item.Price</span>
-                        </div>
-                    </li>
+                    @foreach (BasketItemVM item in Model.BasketItems)
+                    {
+                        <li class="minicart-product">
+                            <a class="product-item_remove" href="#">
+                                <i class="pe-7s-close"
+                                   data-tippy="Remove"
+                                   data-tippy-inertia="true"
+                                   data-tippy-animation="shift-away"
+                                   data-tippy-delay="50"
+                                   data-tippy-arrow="true"
+                                   data-tippy-theme="sharpborder"></i>
+                            </a>
+                            <a asp-action="detail" asp-controller="product" asp-route-id="@item.Id">
+                                class="product-item_img">
+                                <img class="img-full"
+                                     src="~/assets/images/product/@item.Image"
+                                     alt="Product Image" />
+                            </a>
+                            <div class="product-item_content">
+                                <a class="product-item_title"
+                                   asp-action="detail" asp-controller="product">@item.Id</a>
+                                <span class="product-item_quantity">@item.Count x $@item.Price</span>
+                            </div>
+                        </li>
 
                     }
                 </ul>
             </div>
             <div class="minicart-item_total">
-                <span>Subtotal</span>
-                <span class="ammount">$</span>
+                <span>Total</span>
+                <span class="ammount">$@total</span>
             </div>
             <div class="group-btn_wrap d-grid gap-2">
                 <a href="cart.html" class="btn btn-dark">View Cart</a>

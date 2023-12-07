@@ -1,4 +1,6 @@
-﻿namespace Pronia.ViewModel
+﻿using Pronia.Models;
+
+namespace Pronia.ViewModel
 {
     public class BasketItemVM
     {
@@ -8,5 +10,7 @@
         public decimal Price { get; set; }
         public int Count { get; set; }
         public decimal Subtotal { get; set; }
+        public Product Product { get; set; }
+        
     }
 }
