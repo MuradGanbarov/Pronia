@@ -132,91 +132,18 @@ namespace Pronia.Controllers
 
         }
 
-        public async Task<IActionResult> AdminLogin(LoginVM adminlogin, string? returnURL)
-        {
-            if (!ModelState.IsValid) return View();
-
-            bool check = _context.Users.FirstOrDefault(u => u.UserName == adminlogin.UsernameOrEmail || u.Email == adminlogin.UsernameOrEmail) == null;
-
-            if (check)
-            {
-                ModelState.AddModelError(String.Empty, "This account is not exist. Please register.");
-                return View();
-            }
-
-            AppUser user = await _userManager.FindByNameAsync(adminlogin.UsernameOrEmail);
-            if (user is null)
-            {
-                user = await _userManager.FindByEmailAsync(adminlogin.UsernameOrEmail);
-                if (user is null)
-                {
-                    ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
-                    return View();
-                }
-
-            }
-            var result = await _signInManager.PasswordSignInAsync(user, adminlogin.Password, adminlogin.IsRemembered, true); //Bu hisse password'u yoxluyur
-
-            if (result.IsLockedOut)
-            {
-                ModelState.AddModelError(String.Empty, "Please try again in 3 minutes");
-                return View();
-            }
-
-            if (result.Succeeded) return RedirectToAction("Home", "ProniaAdmin");
-
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(String.Empty, "Incorrect username,password or email");
-                return View();
-
-            }
-
-            if (returnURL is null)
-            {
-                return RedirectToAction("Home", "Index");
-            }
-            return Redirect(returnURL);
 
 
-        }
-
-        //public void Check(string UsernameOrEmail)
+        //public async Task<IActionResult> CreateRole()
         //{
-        //    bool check = _context.Users.FirstOrDefault(u => u.UserName == UsernameOrEmail || u.Email == UsernameOrEmail) == null;
-
-        //    if (check)
+        //    foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
         //    {
-        //        ModelState.AddModelError(String.Empty, "This account is not exist. Please register.");
+        //        if (!(await _roleManager.RoleExistsAsync(role.ToString())))
+        //            await _roleManager.CreateAsync(new IdentityRole
+        //            {
+        //                Name = role.ToString(),
+        //            });
         //    }
-            
-        //}
-
-        //public void CheckAdmin(string UsernameOrEmail)
-        //{
-        //    bool check = _context.Users.FirstOrDefault(u => u.UserName == UsernameOrEmail || u.Email == UsernameOrEmail) == null;
-
-        //    if (check)
-        //    {
-        //        ModelState.AddModelError(String.Empty, "This account is not exist");
-        //    }
-
-        //}
-
-
-
-
-
-        /*public async Task<IActionResult> CreateRole()*/ //Db'ye role'lari doldurmaq metodu
-                                                          //{
-                                                          //    foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
-                                                          //    {
-                                                          //        if(!(await _roleManager.RoleExistsAsync(role.ToString())))
-                                                          //        await _roleManager.CreateAsync(new IdentityRole
-                                                          //        {
-                                                          //            Name = role.ToString(),
-                                                          //        });
-                                                          //    }
 
         //    return RedirectToAction("Index", "Home");
         //}

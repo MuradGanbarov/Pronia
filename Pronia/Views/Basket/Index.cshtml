@@ -3,6 +3,7 @@
 
 @{
     decimal total = 0;
+    decimal total2 = 0;
 }
 
 
@@ -45,10 +46,12 @@
                                 <tbody>
                                     @foreach (BasketItemVM item in Model)
                                     {
+                                        
                                         total += item.Subtotal;
+                                        total2 -= item.Subtotal - item.Count;
                                         <tr>
                                             <td class="product_remove">
-                                                <a href="#">
+                                                <a asp-controller="basket" asp-action="delete" asp-route-id="@item.Id">
                                                     <i class="pe-7s-close"
                                                        data-tippy="Remove"
                                                        data-tippy-inertia="true"
@@ -74,10 +77,10 @@
                                                 <div class="cart-plus-minus">
                                                     <input class="cart-plus-minus-box"
                                                            value="@item.Count"
-                                                           type="text" />
+                                                           type="text"/>
                                                     <div class="dec qtybutton">
                                                         <i class="fa fa-minus"></i>
-                                                    </div>
+                                                    </div> 
                                                     <div class="inc qtybutton">
                                                         <i class="fa fa-plus"></i>
                                                     </div>

@@ -8,7 +8,7 @@ namespace Pronia.Areas.ProniaAdmin.ViewModels
         public string Name { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Qiymeti 0 ya 0dan ashaqi ola bilmez")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         [Required]
         [MinLength(10, ErrorMessage = "Description hissesine azi 10 herif olmalidir.")]
         public string Description { get; set; }

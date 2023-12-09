@@ -480,7 +480,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             existed.Name = productVM.Name;
             existed.Description = productVM.Description;
             existed.SKU = productVM.SKU;
-            existed.Price = (double)productVM.Price;
+            existed.Price = productVM.Price;
             existed.CategoryId = (int)productVM.CategoryId;
 
             List<ProductImage> removeable = existed.productImages.Where(pi => !productVM.ImageIds.Exists(imgId => imgId == pi.Id) && pi.IsPrimary == null).ToList();

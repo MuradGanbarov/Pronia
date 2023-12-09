@@ -11,6 +11,5 @@ namespace Pronia.ViewModel
         public int Count { get; set; }
         public decimal Subtotal { get; set; }
         public Product Product { get; set; }
-        
     }
 }

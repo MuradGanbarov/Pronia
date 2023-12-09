@@ -1,6 +1,9 @@
-﻿@model HeaderVM
+﻿@using Pronia.Utilites.Enums;
+@model HeaderVM
 
 @{
+    Dictionary<string, string> settings = Model.Settings;
+    List<BasketItemVM> BasketItems = Model.BasketItems;
     decimal total = 0;
 }
 <!-- Begin Main Header Area -->
@@ -63,7 +66,7 @@
                             <a href="@Model.Settings["PhoneIcon"]">+00 123 456 789</a>
                         </div>
 
-                        <a href="index.html" class="header-logo">
+                        <a asp-action="Index" asp-controller="Home" class="header-logo">
                             <img src="~/assets/images/logo/@Model.Settings["Logo"]" alt="Header Logo" />
                         </a>
 
@@ -93,8 +96,14 @@
                                             <li>
                                                 <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
                                             </li>
+                                            if (User.IsInRole(UserRole.Admin.ToString()) || User.IsInRole(UserRole.Moderator.ToString()))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" asp-action="Home" asp-controller="ProniaAdmin">AdminPanel</a>
+                                                </li>
+                                            }
                                             <li>
-                                                <a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a>
+                                                <a class="dropdown-item" asp-controller="account" asp-action="logout">Logout</a>
                                             </li>
                                         }
                                         else
@@ -105,9 +114,7 @@
                                             <li>
                                                 <a class="dropdown-item" asp-action="register" asp-controller="account">Register</a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
-                                            </li>
+
 
                                         }
 
@@ -520,6 +527,12 @@
                                     <li>
                                         <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
                                     </li>
+                                    if (User.IsInRole(UserRole.Admin.ToString()) || User.IsInRole(UserRole.Moderator.ToString()))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
+                                        </li>
+                                    }
                                     <li>
                                         <a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a>
                                     </li>
@@ -532,9 +545,7 @@
                                     <li>
                                         <a class="dropdown-item" asp-action="register" asp-controller="account">Register</a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
-                                    </li>
+
 
                                 }
                             </ul>
@@ -673,6 +684,13 @@
                                                 <li>
                                                     <a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a>
                                                 </li>
+                                                if (User.IsInRole(UserRole.Admin.ToString()) || User.IsInRole(UserRole.Moderator.ToString()))
+                                                {
+                                                    <li>
+                                                        <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
+                                                    </li>
+                                                }
+
                                             }
                                             else
                                             {
@@ -682,9 +700,7 @@
                                                 <li>
                                                     <a class="dropdown-item" asp-action="register" asp-controller="account">Register</a>
                                                 </li>
-                                                <li>
-                                                    <a class="dropdown-item" asp-action="adminlogin" asp-controller="account">Go to AdminPanel</a>
-                                                </li>
+
 
                                             }
                                             <li>
@@ -839,39 +855,41 @@
                 <ul class="minicart-list">
                     @foreach (BasketItemVM item in Model.BasketItems)
                     {
+                        total += item.Subtotal;
                         <li class="minicart-product">
-                            <a class="product-item_remove" href="#">
+                            <a class="product-item_remove" asp-controller="basket" asp-action="delete" asp-route-id="@item.Id">
                                 <i class="pe-7s-close"
                                    data-tippy="Remove"
                                    data-tippy-inertia="true"
                                    data-tippy-animation="shift-away"
                                    data-tippy-delay="50"
                                    data-tippy-arrow="true"
-                                   data-tippy-theme="sharpborder"></i>
+                                   data-tippy-theme="sharpborder">
+                                </i>
                             </a>
                             <a asp-action="detail" asp-controller="product" asp-route-id="@item.Id">
-                                class="product-item_img">
+
                                 <img class="img-full"
                                      src="~/assets/images/product/@item.Image"
                                      alt="Product Image" />
                             </a>
                             <div class="product-item_content">
                                 <a class="product-item_title"
-                                   asp-action="detail" asp-controller="product">@item.Id</a>
-                                <span class="product-item_quantity">@item.Count x $@item.Price</span>
+                                   asp-action="detail" asp-controller="product" asp-route-id="@item.Id">@item.Name</a>
+                                <span class="product-item_quantity">@item.Count * $@item.Price</span>
                             </div>
                         </li>
-
                     }
                 </ul>
+
             </div>
             <div class="minicart-item_total">
                 <span>Total</span>
                 <span class="ammount">$@total</span>
             </div>
             <div class="group-btn_wrap d-grid gap-2">
-                <a href="cart.html" class="btn btn-dark">View Cart</a>
-                <a href="checkout.html" class="btn btn-dark">Checkout</a>
+                <a asp-controller="basket" asp-action="index" class="btn btn-dark">View Cart</a>
+                <a asp-controller="basket" asp-action="checkout" class="btn btn-dark">Checkout</a>
             </div>
         </div>
     </div>

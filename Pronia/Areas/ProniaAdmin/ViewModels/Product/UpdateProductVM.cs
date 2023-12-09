@@ -9,7 +9,7 @@ namespace Pronia.Areas.ProniaAdmin.ViewModels
 
         [Range(0, int.MaxValue, ErrorMessage = "Price must be bigger than 0")]
         [Required]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Range(1, 300, ErrorMessage = "Chooce a category!")]
         public int? CategoryId { get; set; }
