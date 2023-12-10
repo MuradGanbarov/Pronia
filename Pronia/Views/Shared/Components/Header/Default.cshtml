@@ -6,6 +6,7 @@
     List<BasketItemVM> BasketItems = Model.BasketItems;
     decimal total = 0;
 }
+
 <!-- Begin Main Header Area -->
 <header class="main-header-area">
     <div class="header-top bg-pronia-primary d-none d-lg-block">
@@ -15,6 +16,12 @@
                     <div class="header-top-left">
                         <span class="pronia-offer">HELLO EVERYONE! 25% Off All Products</span>
                     </div>
+                    
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        @Html.Raw(TempData["Message"])
+                    }
+                    
                 </div>
                 <div class="col-6">
                     <div class="header-top-right">
@@ -888,8 +895,8 @@
                 <span class="ammount">$@total</span>
             </div>
             <div class="group-btn_wrap d-grid gap-2">
-                <a asp-controller="basket" asp-action="index" class="btn btn-dark">View Cart</a>
-                <a asp-controller="basket" asp-action="checkout" class="btn btn-dark">Checkout</a>
+                <a asp-controller="basket" asp-action="index" class="btn btn-dark">View Cart</a> 
+                <a asp-controller="basket" asp-action="checkout" class="btn btn-dark">Checkout</a>   
             </div>
         </div>
     </div>

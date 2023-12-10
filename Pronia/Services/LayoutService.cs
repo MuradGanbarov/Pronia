@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Pronia.DAL;
+using Pronia.Interfaces;
 using Pronia.Models;
 using Pronia.ViewModel;
 

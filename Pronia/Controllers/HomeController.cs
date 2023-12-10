@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pronia.DAL;
 using Pronia.Models;
+using Pronia.Services;
 using Pronia.ViewModel;
 
 namespace Pronia.Controllers;
@@ -16,6 +17,7 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Index()
     {
+
         List<Slide> slides=await _context.Slides.OrderBy(s=>s.Order).Take(2).ToListAsync();
         List<Product> products = await _context.Products.Include(p=>p.productImages).OrderByDescending(s => s.Id).ToListAsync();
 

@@ -35,7 +35,7 @@
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label asp-for="Address">Address <span class="required">*</span></label>
-                                        <input placeholder="Street address" asp-for="Address"/>
+                                        <input placeholder="Street address" asp-for="Address" />
                                         <span class="text-danger" asp-validation-for="Address"></span>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach(BasketItem item in Model.BasketItems)
+                                    @foreach (BasketItem item in Model.BasketItems)
                                     {
                                         total += item.Count * (decimal)item.Product.Price;
                                         <tr class="cart_item">
@@ -70,10 +70,10 @@
                                                 <span class="amount">$@total</span>
                                             </td>
                                         </tr>
-                                    }   
+                                    }
                                 </tbody>
                                 <tfoot>
-                                    
+
                                     <tr class="order-total">
                                         <th>Order Total</th>
                                         <td>
@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -171,3 +171,4 @@
         </div>
     </div>
 </main>
+
