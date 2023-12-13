@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Pronia.DAL;
 using Pronia.Interfaces;
+using Pronia.Middlewares;
 using Pronia.Models;
 using Pronia.Services;
 
@@ -34,8 +35,7 @@ app.UseAuthentication(); //Bu ardiciliqla olmalidi, yoxsa cookies'de problem yar
 app.UseAuthorization();
 app.UseStaticFiles();
 
-
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.MapControllerRoute(
     "Category",

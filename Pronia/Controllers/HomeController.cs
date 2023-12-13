@@ -30,5 +30,10 @@ public class HomeController : Controller
 
         return View(vm);
     }
-    
+
+    public IActionResult ErrorPage(string error)
+    {
+        return View(model:error);
+    }
+
 }

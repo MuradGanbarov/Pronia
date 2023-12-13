@@ -18,10 +18,23 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page)
         {
-            List<Category>? categories = await _context.Categories.Include(c => c.Products).ToListAsync();
-            return View(categories);
+            double count = await _context.Categories.CountAsync();
+
+            List<Category>? categories = await _context.Categories.Skip(page*3).Take(3).Include(c => c.Products).ToListAsync();
+
+            PaginationVM<Category> paginationVM = new PaginationVM<Category>()
+            {
+                CurrentPage = page + 1,
+                TotalPage = Math.Ceiling(count / 3),
+                Items = categories,
+            };
+            
+            return View(paginationVM);
+
+
+
         }
         [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
         public IActionResult Create()
@@ -44,15 +57,15 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 ModelState.AddModelError("Name","Bele bir category artiq movcuddur");
                 return View();           
             }
-
-            Category category = new Category
+            else
             {
-                Name = categoryVM.Name,
-            };
-
-
-            await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
+                Category category = new Category
+                {
+                    Name = categoryVM.Name,
+                };
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction(nameof(Index));
 

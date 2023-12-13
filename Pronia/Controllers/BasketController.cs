@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 using NuGet.ContentModel;
 using Pronia.Areas.ProniaAdmin.Models;
 using Pronia.DAL;
@@ -138,7 +139,6 @@ namespace Pronia.Controllers
                     else
                     {
                         item.Count++;
-
                     }
 
                 }
@@ -162,10 +162,7 @@ namespace Pronia.Controllers
             return RedirectToAction(nameof(Index), "Home");
         }
 
-        public async Task<IActionResult> GetBasketItems()
-        {
-            return Content(Request.Cookies["Basket"]);
-        }
+        
 
         public async Task<IActionResult> Checkout()
         {
@@ -303,6 +300,11 @@ namespace Pronia.Controllers
             return RedirectToAction(nameof(Index), "Basket");
 
         }
+
+
+    
+
+
 
     }
 

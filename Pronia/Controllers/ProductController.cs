@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pronia.DAL;
 using Pronia.Models;
+using Pronia.Utilites.Exceptions;
 using Pronia.ViewModel;
 
 namespace Pronia.Controllers
@@ -18,7 +19,7 @@ namespace Pronia.Controllers
         {
             if(id <=0)
             {
-                return BadRequest();
+                throw new WrongRequestException("Gonderilen sorgunuz yanlishdir");
             }
 
             Product product = await _context.Products.
@@ -34,7 +35,7 @@ namespace Pronia.Controllers
             
             if(product == null)
             {
-                return NotFound();
+                throw new WrongRequestException("Bele bir mehsul tapilmadi");
             }
 
             List<Product> SimilarProducts = await _context.Products.Include(product => product.productImages.Where(pi=>pi.IsPrimary!=null)).Where(p => p.CategoryId == product.CategoryId && product.Id != p.Id).Take(4).ToListAsync();

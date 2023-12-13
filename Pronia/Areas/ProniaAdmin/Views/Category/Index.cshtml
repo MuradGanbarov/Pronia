@@ -1,6 +1,6 @@
-﻿@model List<Category>
+﻿@model PaginationVM<Category>
 @{
-    int count = 0;
+    int count = (Model.CurrentPage - 1)*3;
 }
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Category category in Model)
+                            @foreach (Category category in Model.Items)
                             {
                                 count++;
                                 <tr>
@@ -51,6 +51,20 @@
 
                                 </tr>
                             }
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item @(Model.TotalPage-1==0?"disabled":"")">
+                                        <a class="page-link " asp-route-page="@Model.CurrentPage-2" asp-action="Index" asp-controller="Category" tabindex="-1">Previous</a>
+                                    </li>
+                                    @for(int i = 1; i < Model.CurrentPage; i++)
+                                    {
+                                        <li class="page-item @(i==Model.CurrentPage?"disabled":"")"><a class="page-link" asp-route-page="@(i-1)" asp-action="Index" asp-controller="Category">@i</a></li>
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link @(Model.CurrentPage==Model.TotalPage?"disabled":"")" asp-route-page="@Model.CurrentPage+1" asp-action="Index" asp-controller="Category">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </tbody>
                     </table>
                 </div>
@@ -58,3 +72,17 @@
         </div>
     </div>
 </div>
+@* <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        <li class="page-item @(Model.CurrentPage-1<=0?"disabled":"")">
+            <a class="page-link" asp-route-page="@(Model.CurrentPage-2)" asp-action="Index" asp-controller="product">Previous</a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPage; i++)
+        {
+            <li class="page-item @(i==Model.CurrentPage?"disabled":"")"><a class="page-link" asp-route-page="@(i-1)" asp-action="Index" asp-controller="product">@i</a></li>
+        }
+        <li class="page-item @(Model.CurrentPage==Model.TotalPage?"disabled":"")">
+            <a class="page-link" asp-route-page="@(Model.CurrentPage)" asp-action="Index" asp-controller="product">Next</a>
+        </li>
+    </ul>
+</nav> *@

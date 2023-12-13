@@ -12,6 +12,7 @@ namespace Pronia.Services
     {
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _http;
+        
 
         public LayoutService(AppDbContext context,IHttpContextAccessor http)
         {
@@ -25,6 +26,6 @@ namespace Pronia.Services
         }
 
         
-        
+
     }
 }
