@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using NuGet.ContentModel;
@@ -82,7 +83,7 @@ namespace Pronia.Controllers
             return View(basketVM);
         }
 
-        public async Task<IActionResult> AddBasket(int id)
+        public async Task<IActionResult> AddBasket(int id,string? returnurl)
         {
             if (id <= 0) return BadRequest();
 
@@ -157,8 +158,9 @@ namespace Pronia.Controllers
                 }
                 string json = JsonConvert.SerializeObject(basket);
                 Response.Cookies.Append("Basket", json);
-                return RedirectToAction(nameof(Index));
+                if (returnurl is not null) return Redirect(returnurl);
             }
+            if (returnurl is not null) return Redirect(returnurl);            
             return RedirectToAction(nameof(Index), "Home");
         }
 
@@ -248,14 +250,14 @@ namespace Pronia.Controllers
 
 
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id,string? returnurl)
         {
+            if (id <= 0) return BadRequest();
+            Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if(product == null) return NotFound();
             if (User.Identity.IsAuthenticated)
             {
-                if (id <= 0) return BadRequest();
-                AppUser? user = await _userManager.Users.Include(u => u.BasketItems).ThenInclude(bi => bi.Product).ThenInclude(p => p.productImages.Where(pi => pi.IsPrimary == true)).FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
-                if (user is null) return NotFound();
-                BasketItem item = user.BasketItems.FirstOrDefault(bi => bi.ProductId == id);
+                BasketItem item = await _context.BasketItems.FirstOrDefaultAsync(bi => bi.ProductId == id && bi.AppUserId==User.FindFirstValue(ClaimTypes.NameIdentifier));
                 if (item is null) return NotFound();
                 _context.BasketItems.Remove(item);
                 await _context.SaveChangesAsync();
@@ -273,36 +275,55 @@ namespace Pronia.Controllers
                     Response.Cookies.Append("Basket", json);
                 }
             }
-
+            if(returnurl is not null) return Redirect(returnurl);
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> MinusButton(int id)
+        public async Task<IActionResult> DecreaseQuantity(int id)
         {
-            if (id <= 0) return NotFound();
-
             if (User.Identity.IsAuthenticated)
             {
-                AppUser? user = await _userManager.Users.Include(u => u.BasketItems).ThenInclude(bi => bi.Product).ThenInclude(p => p.productImages.Where(pi => pi.IsPrimary == true)).FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
-                if (user is null) return NotFound();
-                BasketItem item = user.BasketItems.FirstOrDefault(i => i.ProductId == id);
-
-                item.Count--;
-
-                if (item.Count <= 0)
+                BasketItem? item = await _context.BasketItems.FirstOrDefaultAsync(bi => bi.ProductId == id && bi.AppUserId == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                if (item == null) return NotFound();
+                if (item.Count > 1)
                 {
-                    return await Delete(item.Id);
+                    item.Count--;
                 }
-
+                else
+                {
+                    _context.BasketItems.Remove(item);
+                }
                 await _context.SaveChangesAsync();
+
+
             }
 
-            return RedirectToAction(nameof(Index), "Basket");
+            else
+            {
+                string Cookies = Request.Cookies["Basket"];
+
+                if (Cookies.IsNullOrEmpty()) return NotFound();
+
+                List<BasketCookiesItemVM> items = JsonConvert.DeserializeObject<List<BasketCookiesItemVM>>(Cookies);
+                BasketCookiesItemVM decreaseitem = items.FirstOrDefault(i => i.Id == id);
+                if (decreaseitem is null) return NotFound();
+                if(decreaseitem.Count > 1)
+                {
+                    decreaseitem.Count--;
+                    Response.Cookies.Append("Basket", JsonConvert.SerializeObject(items));
+                    return RedirectToAction(nameof(Index));
+                }
+
+                items.Remove(decreaseitem);
+                Response.Cookies.Append("Basket", JsonConvert.SerializeObject(items));
+
+            }
+                return RedirectToAction(nameof(Index));
 
         }
 
 
-    
+
 
 
 

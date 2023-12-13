@@ -5,6 +5,7 @@ using Pronia.Areas.ViewModels;
 using Pronia.DAL;
 using Pronia.Models;
 using Pronia.Utilites.Enums;
+using Pronia.Utilites.Exceptions;
 using static Pronia.Areas.ProniaAdmin.Models.Utilities.Extensions.AuthorizeRoles;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
@@ -57,15 +58,14 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 ModelState.AddModelError("Name","Bele bir category artiq movcuddur");
                 return View();           
             }
-            else
-            {
+            
                 Category category = new Category
                 {
                     Name = categoryVM.Name,
                 };
                 await _context.Categories.AddAsync(category);
                 await _context.SaveChangesAsync();
-            }
+            
 
             return RedirectToAction(nameof(Index));
 
@@ -77,8 +77,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             Category category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id == id);
             
             if (category is null) return NotFound();
-            UpdateCategoryVM categoryVM = new UpdateCategoryVM { Name = category.Name };
-            return View(categoryVM);
+            return View(category);
 
 
         }
@@ -90,18 +89,18 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 return View(categoryVM);
             }
 
-            Category category = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
-            if(category is null) return NotFound();
+            Category existed = await _context.Categories.FirstOrDefaultAsync(c=>c.Id==id);
+            if(existed is null) return NotFound();
             
-            bool ExistCheck = _context.Categories.Any(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim()&&c.Id!=id);
+            bool ExistCheck = _context.Categories.Any(c => c.Name.ToLower().Trim() == existed.Name.ToLower().Trim()&&c.Id!=id);
             if (ExistCheck)
             {
                 ModelState.AddModelError("Name","Bele bir kateqoriya hal hazirda var");
                 return View(categoryVM);
             };
 
-            if (category.Name == categoryVM.Name) return RedirectToAction(nameof(Index));
-            category.Name = categoryVM.Name;
+            
+            existed.Name = categoryVM.Name;
             _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));     
         }
@@ -112,7 +111,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             Category existed = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
-            if( existed is null) return NotFound();
+            if(existed is null) return NotFound();
 
             _context.Categories.Remove(existed);
 
@@ -121,11 +120,12 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             return RedirectToAction(nameof(Index));
         }
         [AuthorizeRolesAttribute(UserRole.Admin, UserRole.Moderator)]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            Category category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
-            List<Product>? products = await _context.Products.Include(p=>p.productImages).Where(p => p.CategoryId == id).ToListAsync();
-            return View(products);
+            if (id <= 0) return BadRequest();
+            Category category = await _context.Categories.Include(c => c.Products).ThenInclude(p=>p.productImages.Where(pi=>pi.IsPrimary==true)).FirstOrDefaultAsync(c => c.Id == id);
+            if (category is null) return NotFound();
+            return View(category);
         }
         
 

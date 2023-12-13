@@ -24,16 +24,17 @@ namespace Pronia.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            Dictionary<string, string> settings = await _context.Settings.ToDictionaryAsync(s=>s.Key,s=>s.Value);
             List<BasketItemVM> basketVM = new List<BasketItemVM>();
-            if (_http.HttpContext.User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-
                 var user = await _userManager.Users.
                     Include(u => u.BasketItems.Where(bi => bi.OrderId == null)).
                     ThenInclude(bi => bi.Product).
                     ThenInclude(p => p.productImages.
                     Where(pi => pi.IsPrimary == true)).
                     FirstOrDefaultAsync(u => u.Id == _http.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                
                 foreach (var item in user.BasketItems)
                 {
                     basketVM.Add(new BasketItemVM

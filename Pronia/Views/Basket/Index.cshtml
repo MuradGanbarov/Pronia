@@ -51,7 +51,7 @@
                                         total2 -= item.Subtotal - item.Count;
                                         <tr>
                                             <td class="product_remove">
-                                                <a asp-controller="basket" asp-action="delete" asp-route-id="@item.Id">
+                                                <a asp-controller="basket" asp-action="delete" asp-route-id="@item.Id" asp-route-returnurl="@Context.Request.Path.Value">
                                                     <i class="pe-7s-close"
                                                        data-tippy="Remove"
                                                        data-tippy-inertia="true"
@@ -75,15 +75,11 @@
                                             </td>
                                             <td class="quantity">
                                                 <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box"
+                                                     <a class="decrease-count-btns" asp-controller="basket" asp-action="decreasequantity" asp-route-id="@item.Id" asp-route-returnurl="@Context.Request.Path.Value">-</a>
+                                                    <input data-id="@item.Id" class="cart-plus-minus-box"
                                                            value="@item.Count"
                                                            type="text"/>
-                                                    <div class="dec qtybutton">
-                                                        <i class="fa fa-minus"></i>
-                                                    </div> 
-                                                    <div class="inc qtybutton">
-                                                        <i class="fa fa-plus"></i>
-                                                    </div>
+                                                    <a class="change-count-btns" asp-controller="basket" asp-action="addbasket" asp-route-id="@item.Id" asp-route-returnurl="@Context.Request.Path.Value">+</a>
                                                 </div>
                                             </td>
                                             <td class="product-subtotal">
@@ -136,3 +132,22 @@
         </div>
     </div>
 </main>
+
+
+
+@* <script>
+    const minusButton = document.getElementsByClassName('fa fa-minus');
+    const plusButton = document.getElementsByClassName('fa fa-plus');
+    
+    minusButton.addEventListener('click', event => {
+        event.PreventDefault();
+        const currentValue = Number(inputField.value) || 0;
+        inputField.value = currentValue - 1;
+    });
+
+    plusButton.addEventListener('click', event => {
+        event.PreventDefault();
+        const currentValue = Number(inputField.value) || 0;
+        inputField.value = currentValue + 1;
+    })
+</script> *@

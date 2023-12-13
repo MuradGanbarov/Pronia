@@ -1,9 +1,9 @@
-﻿@model List<Product>
+﻿@model Category
 <div class="container">
     <div class="row">
         <div class=".table-striped">
             <div class="col-xl-3 col-md-4 col-sm-6">
-                @foreach (Product product in Model)
+                @foreach (Product product in Model.Products)
                 {
                     <div class="card" style="width: 20rem;">
                         <img class="primary-img"
